@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "dprint.dprint",
+    "dbaeumer.vscode-eslint",
+    "biomejs.biome",
+    "stylelint.vscode-stylelint",
+    "christian-kohler.npm-intellisense",
+    "yoavbls.pretty-ts-errors",
+    "antfu.vite",
+    "wix.vscode-import-cost",
+    "bradlc.vscode-tailwindcss",
+    "jacobcassidy.css-nesting-syntax-highlighting",
+    "ofhumanbondage.react-proptypes-intellisense"
+  ]
+}

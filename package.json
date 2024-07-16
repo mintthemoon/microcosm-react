@@ -1,0 +1,50 @@
+{
+  "name": "root",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "lerna run dev",
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "lint": "npm run lint:eslint; npm run lint:biome; npm run lint:style; npm run fmt:check",
+    "lint:eslint": "eslint .",
+    "lint:biome": "biome lint .",
+    "lint:style": "stylelint **/*.css",
+    "fix": "npm run fix:eslint; npm run fix:biome; npm run fix:style; npm run fmt",
+    "fix:eslint": "eslint --fix .",
+    "fix:biome": "biome lint --write .",
+    "fix:style": "stylelint --fix **/*.css",
+    "fmt": "dprint fmt",
+    "fmt:check": "dprint check"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@culur/config-stylelint": "^1.0.4",
+    "@eslint/js": "^9.7.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "8.0.0-alpha.44",
+    "@typescript-eslint/parser": "8.0.0-alpha.44",
+    "dprint": "^0.47.2",
+    "eslint": "^9.7.0",
+    "eslint-plugin-react-hooks": "5.1.0-rc-8b08e99e-20240713",
+    "eslint-plugin-react-refresh": "^0.4.8",
+    "lerna": "^8.1.6",
+    "stylelint": "^16.7.0",
+    "stylelint-config-recess-order": "^5.0.1",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-css-modules": "^1.2.2",
+    "stylelint-plugin-defensive-css": "^1.0.4",
+    "stylelint-use-nesting": "^5.1.1",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "8.0.0-alpha.44"
+  },
+  "dependencies": {
+    "lightningcss": "^1.25.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "4.0.0-alpha.17"
+  }
+}

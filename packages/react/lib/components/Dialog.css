@@ -1,0 +1,89 @@
+@import "./base.css";
+
+dialog.mc-dialog {
+  --color-content-bg: var(--color-bg-neutral);
+  --color-overlay-bg: var(--color-neutral-600);
+  --color-content-sep: var(--color-border-neutral);
+  --transition-duration-fade: 150ms;
+  --transition-timing-function-fade: ease-in-out;
+
+  display: flex;
+  pointer-events: none;
+  opacity: 0;
+  transition-timing-function: var(--transition-timing-function-fade);
+  transition-duration: var(--transition-duration-fade);
+  transition-property: opacity;
+
+  &::backdrop {
+    background-color: var(--color-overlay-bg);
+    filter: blur(var(--blur-xs));
+    opacity: 0;
+    transition-timing-function: var(--transition-timing-function-fade);
+    transition-duration: var(--transition-duration-fade);
+    transition-property: opacity;
+  }
+
+  &[open] {
+    pointer-events: inherit;
+    opacity: 1;
+  }
+
+  &[open]::backdrop {
+    opacity: 1;
+  }
+
+  & > div.mc-dialog-container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    overflow-y: auto;
+
+    & > section.mc-dialog-content {
+      position: relative;
+      min-width: var(--width-md);
+      max-width: var(--width-lg);
+      min-height: fit-content;
+      padding: var(--spacing-4);
+      color: var(--color-text);
+      background-color: var(--color-content-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--drop-shadow-2xl);
+
+      & > header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--spacing-2) var(--spacing-5) var(--spacing-6);
+        border-bottom: 1px solid var(--color-content-sep);
+
+        & > h2 {
+          display: inline-block;
+          margin-bottom: 0;
+        }
+
+        & > form {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+@media (width >= 40rem) {
+  dialog.mc-dialog > div.mc-dialog-container {
+    align-items: center;
+  }
+
+}
+
+@media (width >= 64rem) {
+  dialog.mc-dialog > div.mc-dialog-container > section.mc-dialog-content {
+    min-width: var(--width-lg);
+    max-width: var(--width-xl);
+  }
+}
