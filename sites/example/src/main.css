@@ -42,14 +42,14 @@
 }
 
 .mc-component {
-  --color-bg-neutral: var(--color-neutral-700);
-  --color-bg-neutral-highlight: var(--color-neutral-600);
+  --color-bg-neutral: var(--color-neutral-600);
+  --color-bg-neutral-highlight: var(--color-neutral-500);
   --color-text: var(--color-light);
   --color-title: var(--color-dark);
 }
 
 dialog.mc-dialog {
-  --color-overlay-bg: color-mix(in srgb, var(--color-primary-200) 90%, transparent);
+  --color-overlay-bg: color-mix(in srgb, var(--color-primary-200) 97%, transparent);
   --color-content-bg: var(--color-neutral-400);
 }
 

@@ -30,19 +30,20 @@
     cursor: pointer;
     background-color: var(--color-bg-neutral);
     border: 1.5px solid var(--color-border-neutral);
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-md);
     box-shadow: var(--drop-shadow-lg);
 
     &:hover {
       color: var(--color-text-neutral-highlight);
       background-color: var(--color-bg-neutral-highlight);
+      border-color: var(--color-border-neutral-highlight);
       box-shadow: var(--drop-shadow-xl);
     }
 
     &:focus-visible {
       color: var(--color-text-neutral-highlight);
       background-color: var(--color-bg-neutral-highlight);
-      outline: 2px solid var(--color-border-primary);
+      outline: 2px solid var(--color-border-secondary);
       outline-offset: 2px;
       box-shadow: var(--drop-shadow-xl);
     }
@@ -60,7 +61,7 @@
     &:hover {
       color: var(--color-text-primary-highlight);
       background-color: var(--color-bg-primary-highlight);
-      border-color: --color-neutral-primary-highlight;
+      border-color: var(--color-border-primary-highlight);
     }
 
     &:focus-visible {
@@ -78,6 +79,7 @@
     &:hover {
       color: var(--color-text-secondary-highlight);
       background-color: var(--color-bg-secondary-highlight);
+      border-color: var(--color-border-secondary-highlight);
     }
 
     &:focus-visible {

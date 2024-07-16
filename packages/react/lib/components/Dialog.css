@@ -4,32 +4,39 @@ dialog.mc-dialog {
   --color-content-bg: var(--color-bg-neutral);
   --color-overlay-bg: var(--color-neutral-600);
   --color-content-sep: var(--color-border-neutral);
+  --color-dialog-title: var(--color-primary-600);
   --transition-duration-fade: 150ms;
   --transition-timing-function-fade: ease-in-out;
 
   display: flex;
   pointer-events: none;
   opacity: 0;
-  transition-timing-function: var(--transition-timing-function-fade);
-  transition-duration: var(--transition-duration-fade);
-  transition-property: opacity;
 
   &::backdrop {
     background-color: var(--color-overlay-bg);
-    filter: blur(var(--blur-xs));
+    filter: blur(var(--blur-lg));
     opacity: 0;
-    transition-timing-function: var(--transition-timing-function-fade);
-    transition-duration: var(--transition-duration-fade);
-    transition-property: opacity;
   }
 
   &[open] {
-    pointer-events: inherit;
     opacity: 1;
+    pointer-events: inherit;
+    animation: fadeIn var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
   }
 
   &[open]::backdrop {
     opacity: 1;
+    animation: fadeIn var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
+  }
+
+  &.mc-dialog-closing {
+    opacity: 0;
+    animation: fadeOut var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
+  }
+
+  &.mc-dialog-closing::backdrop {
+    opacity: 0;
+    animation: fadeOut var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
   }
 
   & > div.mc-dialog-container {
@@ -48,29 +55,56 @@ dialog.mc-dialog {
       min-width: var(--width-md);
       max-width: var(--width-lg);
       min-height: fit-content;
-      padding: var(--spacing-4);
+      padding: var(--spacing-4) var(--spacing-6);
       color: var(--color-text);
       background-color: var(--color-content-bg);
       border-radius: var(--radius-lg);
-      box-shadow: var(--drop-shadow-2xl);
+      box-shadow: var(--drop-shadow-xl);
 
       & > header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: var(--spacing-2) var(--spacing-5) var(--spacing-6);
+        padding: var(--spacing-2) var(--spacing-1);
+        margin: -1em -1em -1em -1em;
         border-bottom: 1px solid var(--color-content-sep);
 
         & > h2 {
-          display: inline-block;
-          margin-bottom: 0;
+          display: inline-flex;
+          margin: var(--spacing-4) 0 var(--spacing-2) var(--spacing-2);
+          color: var(--color-dialog-title)
         }
 
         & > form {
-          display: inline-block;
+          display: flex;
+          margin-top: -1em;
+          
+          & > button {
+            font-size: var(--font-size-sm);
+            
+          }
         }
       }
     }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
@@ -78,7 +112,6 @@ dialog.mc-dialog {
   dialog.mc-dialog > div.mc-dialog-container {
     align-items: center;
   }
-
 }
 
 @media (width >= 64rem) {
