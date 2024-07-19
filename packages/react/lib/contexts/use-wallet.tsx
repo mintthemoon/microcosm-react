@@ -1,14 +1,15 @@
 import { WalletConnectionStore } from "$lib/data"
 import { defaultWalletState, getProvider } from "$lib/wallet"
+import type { WalletContext } from "$types"
 import { buildHooks } from "$util"
 import { type DeliverTxResponse, SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate"
 import type { OfflineSigner } from "@cosmjs/proto-signing"
 import { coins, type EncodeObject } from "@cosmjs/proto-signing"
 import { SigningStargateClient } from "@cosmjs/stargate"
 import { useCallback, useEffect } from "react"
+import { WalletDispatchContext, WalletStateContext } from "./ctx-wallet"
 import { useChain } from "./use-chain"
 import { useError } from "./use-error"
-import { type WalletContext, WalletDispatchContext, WalletStateContext } from "./wallet"
 
 export const useWallet = (): WalletContext => {
   const { useContextState: useWalletState, useContextDispatch: useWalletDispatch } = buildHooks(
@@ -17,7 +18,7 @@ export const useWallet = (): WalletContext => {
     WalletDispatchContext,
   )
   const state = useWalletState()
-  const { dispatch } = useWalletDispatch()
+  const dispatch = useWalletDispatch()
   const { chainId, rpcUrl, info } = useChain()
   const { setError } = useError()
 

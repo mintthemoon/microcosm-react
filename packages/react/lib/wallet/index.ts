@@ -1,5 +1,4 @@
-import type { WalletProvider } from "$types"
-import type { WalletState } from "$lib/contexts/wallet"
+import type { WalletProvider, WalletState } from "$types"
 
 import { KeplrProvider } from "./keplr"
 

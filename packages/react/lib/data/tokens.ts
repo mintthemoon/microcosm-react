@@ -1,6 +1,6 @@
 import type { ChainData, Denom, Token, Tokens } from "$types"
-import type { Coin } from "@cosmjs/stargate"
 import { fmtAmount } from "$util"
+import type { Coin } from "@cosmjs/stargate"
 import moize from "moize"
 
 export const coinToToken = moize((coin: Coin, info: ChainData): Token => {

@@ -12,8 +12,8 @@
 
   & > .mc-dropdown-dialog {
     position: absolute;
-    z-index: 1;
     top: 100%;
+    z-index: 1;
     min-width: var(--width-xs);
     margin-top: var(--spacing-1);
     background-color: var(--color-content-bg);

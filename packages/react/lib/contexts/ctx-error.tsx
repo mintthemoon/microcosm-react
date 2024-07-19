@@ -1,13 +1,5 @@
+import type { ErrorConfig, ErrorState } from "$types"
 import { buildContext } from "$util"
-
-export type ErrorConfig = Record<string, unknown>
-
-export type ErrorState = Record<string, unknown> & { error?: Error }
-
-export type ErrorContext = ErrorState & {
-  setError: (error: Error) => void
-  clearError: () => void
-}
 
 const defaultErrorState: ErrorState = { error: undefined }
 

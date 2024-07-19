@@ -3,6 +3,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
+    "rootDir": "./lib",
     "declarationDir": "./dist/types",
     "paths": {
       "$lib": ["./lib"],
@@ -13,5 +14,5 @@
       "$types/*": ["./lib/types"]
     }
   },
-  "include": ["lib/**/*.ts", "lib/**/*.tsx", "__test__/*.ts"]
+  "include": ["lib/**/*.ts", "lib/**/*.tsx"]
 }

@@ -40,10 +40,16 @@ export const DropdownItem = forwardRef<HTMLButtonElement, DropdownItemProps>(
         {closeDropdown ?
           (
             <form method="dialog" aria-label="Close dropdown">
-              <button ref={ref} type="submit" className={cn("mc-dropdown-item", className)} {...props}>{children}</button>
+              <button ref={ref} type="submit" className={cn("mc-dropdown-item", className)} {...props}>
+                {children}
+              </button>
             </form>
           ) :
-          <button ref={ref} type="button" className={cn("mc-dropdown-item", className)} {...props}>{children}</button>}
+          (
+            <button ref={ref} type="button" className={cn("mc-dropdown-item", className)} {...props}>
+              {children}
+            </button>
+          )}
       </li>
     )
   },

@@ -6,6 +6,7 @@
     "dev": "lerna run dev",
     "build": "lerna run build",
     "test": "lerna run test",
+    "publish": "npm run build && lerna publish",
     "lint": "npm run lint:eslint; npm run lint:biome; npm run lint:style; npm run fmt:check",
     "lint:eslint": "eslint .",
     "lint:biome": "biome lint .",

@@ -1,4 +1,4 @@
-import type { DialogProps } from "$types/components"
+import type { DialogProps } from "$types"
 import { cn } from "$util"
 import {
   forwardRef,

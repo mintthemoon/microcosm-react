@@ -9,28 +9,28 @@
 
   & > dialog {
     opacity: 0;
-    transform: scaleY(0);
-    transform-origin: top;
     transition:
       opacity 150ms ease-in-out,
       transform 150ms ease-out,
       display 150ms ease-out allow-discrete,
       overlay 150ms ease-out allow-discrete;
-  }
+    transform: scaleY(0);
+    transform-origin: top;
 
-  & > dialog[open] {
-    transform: scaleY(1);
-    opacity: 1;
+    &[open] {
+      @starting-style {
+        opacity: 0;
+        transform: scaleY(0);
+      }
 
-    @starting-style {
-      transform: scaleY(0);
-      opacity: 0;
+      opacity: 1;
+      transform: scaleY(1);
     }
   }
 
   & .mc-wallet-icon {
-    width: 1.5em;
     display: inline-block;
+    width: 1.5em;
     margin-right: var(--spacing-2);
   }
 
@@ -39,15 +39,15 @@
   }
 
   & .mc-wallet-provider-logo {
-    width: 1.5em;
     display: inline-block;
+    width: 1.5em;
     margin-right: var(--spacing-3);
   }
 
   & .mc-dropdown-item {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
   }
 
   & > .mc-wallet-trigger {
@@ -75,31 +75,31 @@
   }
 
   & .mc-wallet-addr {
-    cursor: default;
     font-family: var(--font-family-mono);
     font-weight: 500;
+    cursor: default;
     border-bottom: 1px solid var(--color-separator);
   }
 
   & .mc-wallet-token {
-    cursor: default;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    cursor: default;
 
     & > .mc-token-icon > img {
-      width: 2em;
       display: inline-block;
+      width: 2em;
       margin-right: var(--spacing-1_5);
       filter: grayscale(0.2);
-      box-shadow: var(--drop-shadow-sm);
       border-radius: var(--radius-lg);
+      box-shadow: var(--drop-shadow-sm);
     }
 
     & > .mc-wallet-token-amount {
-      color: var(--color-text-neutral);
       margin-right: var(--spacing-2);
       font-weight: 400;
+      color: var(--color-text-neutral);
     }
   }
 }

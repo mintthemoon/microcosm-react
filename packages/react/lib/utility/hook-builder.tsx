@@ -3,85 +3,28 @@ import {
   createContext,
   type Dispatch,
   type PropsWithChildren,
-  useCallback,
   useContext,
   useReducer,
 } from "react"
 
-type RecordWithError = Record<string, unknown> & { error?: Error }
-type DispatchValue<T extends Partial<RecordWithError>> = {
-  dispatch: Dispatch<T>
-  useDispatchCb: (
-    fn: (args?: unknown) => T | undefined,
-    errorCb?: (err: Error) => void,
-  ) => (args?: unknown) => void
-  useDispatchCbAsync: (
-    fn: (args?: unknown) => Promise<T | undefined>,
-    errorCb?: (err: Error) => void,
-  ) => (args?: unknown) => void
-}
-
-export const buildContext = <T extends RecordWithError, C extends Record<string, unknown>>(
-  initialState: T,
-) => {
+export const buildContext = <T extends Record<string, unknown>, C extends Partial<T>>(initialState: T) => {
   type ContextState = T
   type ContextAction = Partial<ContextState>
   type ContextConfig = C
   type ContextProps = PropsWithChildren<{ config?: ContextConfig }>
-  type ContextDispatch = DispatchValue<ContextAction>
 
   const contextReducer = (state: ContextState, action: ContextAction): ContextState => ({
     ...state,
     ...action,
   })
   const StateContext = createContext<ContextState | undefined>(initialState)
-  const DispatchContext = createContext<ContextDispatch | undefined>(undefined)
+  const DispatchContext = createContext<Dispatch<ContextAction> | undefined>(undefined)
   const ContextProvider = ({ children, config }: ContextProps) => {
     const [state, dispatch] = useReducer(contextReducer, initialState)
 
-    const useDispatchCb = (
-      fn: (args?: unknown) => Record<string, unknown> | undefined,
-      errorCb?: (err: Error) => void,
-    ) => {
-      return useCallback((args?: unknown) => {
-        try {
-          const action = fn(args)
-          if (action === undefined) return
-          dispatch(action as ContextAction)
-        } catch (err) {
-          if (errorCb) {
-            errorCb(err as Error)
-          } else {
-            dispatch({ error: err as Error } as ContextAction)
-          }
-        }
-      }, [fn, errorCb])
-    }
-
-    const useDispatchCbAsync = (
-      fn: (args: unknown) => Promise<Record<string, unknown> | undefined>,
-      errorCb?: (err: Error) => void,
-    ) => {
-      return useCallback(async (args: unknown) => {
-        try {
-          const action = await fn(args)
-          if (action === undefined) return
-          dispatch(action as ContextAction)
-        } catch (err) {
-          if (errorCb) {
-            errorCb(err as Error)
-          } else {
-            dispatch({ error: err as Error } as ContextAction)
-          }
-        }
-      }, [fn, errorCb])
-    }
-
     return (
       <StateContext.Provider value={{ ...state, ...config }}>
-        <DispatchContext.Provider value={{ dispatch, useDispatchCb, useDispatchCbAsync }}>
-          {children}
-        </DispatchContext.Provider>
+        <DispatchContext.Provider value={dispatch}>{children}</DispatchContext.Provider>
       </StateContext.Provider>
     )
   }
@@ -89,10 +32,10 @@ export const buildContext = <T extends RecordWithError, C extends Record<string,
   return { ContextProvider, StateContext, DispatchContext }
 }
 
-export const buildHooks = <S extends RecordWithError, A extends Partial<S>>(
+export const buildHooks = <S extends Record<string, unknown>, A extends Partial<S>>(
   name: string,
   StateContext: Context<S | undefined>,
-  DispatchContext: Context<DispatchValue<A> | undefined>,
+  DispatchContext: Context<Dispatch<A> | undefined>,
 ) => {
   const useContextState = () => {
     const context = useContext(StateContext)

@@ -1,9 +1,10 @@
 import { coinsToTokens, getChain } from "$lib/data"
+import type { ChainContext } from "$types"
 import { buildHooks } from "$util"
 import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate"
 import { StargateClient } from "@cosmjs/stargate"
 import { useCallback, useEffect } from "react"
-import { ChainDispatchContext, ChainStateContext, type ChainContext } from "./chain"
+import { ChainDispatchContext, ChainStateContext } from "./ctx-chain"
 import { useError } from "./use-error"
 
 export const useChain = (): ChainContext => {
@@ -13,7 +14,7 @@ export const useChain = (): ChainContext => {
     ChainDispatchContext,
   )
   const state = useChainState()
-  const { dispatch } = useChainDispatch()
+  const dispatch = useChainDispatch()
   const { setError } = useError()
 
   const updateChainInfo = useCallback(() => {

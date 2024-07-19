@@ -1,6 +1,7 @@
 {
   "name": "microcosm-react-example",
   "version": "0.0.0",
+  "private": true,
   "description": "Example implementation of the @microcosm/react framework",
   "author": "mintthemoon <mint@mintthemoon.xyz>",
   "homepage": "https://mintthemoon.xyz",

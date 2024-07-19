@@ -19,10 +19,11 @@ export default tseslint.config(
       parser: tseslintParser,
       parserOptions: {
         ecmaFeatures: { jsx: true },
-        projectService: true,
+        projectService: {
+          // TODO figure out what the hell this means. I've argued with eslint enough today and this seems like an absurd limitation
+          maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 20,
+        },
         tsconfigRootDir: import.meta.dirname,
-        // TODO figure out what the hell this means. I've argued with eslint enough today and this seems like an absurd limitation
-        maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 20,
       },
     },
     plugins: {

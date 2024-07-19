@@ -1,6 +1,6 @@
 import { Dropdown, DropdownItem, Modal, useError, useWallet, Wallet } from "@microcosm/react"
 import "./App.css"
-import { useRef, useCallback } from "react"
+import { useCallback, useRef } from "react"
 
 export const App = () => {
   const { isReady, broadcast, addr } = useWallet()

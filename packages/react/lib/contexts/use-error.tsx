@@ -1,6 +1,7 @@
+import type { ErrorContext } from "$types"
 import { buildHooks } from "$util"
 import { useCallback, useEffect } from "react"
-import { ErrorDispatchContext, ErrorStateContext, type ErrorContext } from "./error"
+import { ErrorDispatchContext, ErrorStateContext } from "./ctx-error"
 
 export const useError = (): ErrorContext => {
   const { useContextState: useErrorState, useContextDispatch: useErrorDispatch } = buildHooks(
@@ -9,7 +10,7 @@ export const useError = (): ErrorContext => {
     ErrorDispatchContext,
   )
   const state = useErrorState()
-  const { dispatch } = useErrorDispatch()
+  const dispatch = useErrorDispatch()
 
   const setError = useCallback((error: Error) => {
     dispatch({ error })
