@@ -5,14 +5,29 @@
   "author": "mintthemoon <mint@mintthemoon.xyz>",
   "homepage": "https://mintthemoon.xyz",
   "license": "Unlicense",
-  "scripts": { "test": "node __test__/main.test.ts", "build": "tswc -- lib -d dist", "clean": "rm -rf dist" },
+  "browserslist": ">0.3%, defaults, fully supports es6-module, fully supports bigint, not ie 11",
+  "scripts": {
+    "test": "node __test__/main.test.ts",
+    "build": "tsc --emitDeclarationOnly && tswc -- lib -d dist",
+    "clean": "rm -rf dist"
+  },
   "exports": { ".": "./lib/index.ts", "./base.css": "./lib/components/base.css" },
-  "types": "./lib/types",
-  "directories": { "lib": "lib", "dist": "dist", "test": "__test__" },
   "files": ["lib", "dist"],
-  "publishConfig": { "access": "public" },
   "repository": { "type": "git", "url": "git+https://github.com/mintthemoon/microcosm-react.git" },
   "bugs": { "url": "https://github.com/mintthemoon/microcosm-react/issues" },
   "devDependencies": { "@swc/core": "^1.6.13", "tswc": "^1.2.0" },
-  "dependencies": { "clsx": "^2.1.1", "tailwind-merge": "^2.4.0" }
+  "dependencies": {
+    "@chain-registry/types": "^0.45.27",
+    "@cosmjs/amino": "^0.32.4",
+    "@cosmjs/cosmwasm-stargate": "^0.32.4",
+    "@cosmjs/proto-signing": "^0.32.4",
+    "@cosmjs/stargate": "^0.32.4",
+    "@headlessui/react": "^2.1.2",
+    "@heroicons/react": "^2.1.5",
+    "chain-registry": "^1.63.32",
+    "clsx": "^2.1.1",
+    "kujira.js": "github:Team-Kujira/kujira.js",
+    "moize": "^6.1.6",
+    "tailwind-merge": "^2.4.0"
+  }
 }

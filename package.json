@@ -29,22 +29,20 @@
     "@typescript-eslint/parser": "8.0.0-alpha.44",
     "dprint": "^0.47.2",
     "eslint": "^9.7.0",
+    "eslint-plugin-compat": "^6.0.0",
     "eslint-plugin-react-hooks": "5.1.0-rc-8b08e99e-20240713",
     "eslint-plugin-react-refresh": "^0.4.8",
     "lerna": "^8.1.6",
+    "lightningcss": "^1.25.1",
     "stylelint": "^16.7.0",
     "stylelint-config-recess-order": "^5.0.1",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-css-modules": "^1.2.2",
     "stylelint-plugin-defensive-css": "^1.0.4",
     "stylelint-use-nesting": "^5.1.1",
+    "tailwindcss": "4.0.0-alpha.17",
     "typescript": "^5.5.3",
     "typescript-eslint": "8.0.0-alpha.44"
   },
-  "dependencies": {
-    "lightningcss": "^1.25.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "tailwindcss": "4.0.0-alpha.17"
-  }
+  "dependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" }
 }

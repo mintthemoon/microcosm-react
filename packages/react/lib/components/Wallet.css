@@ -1,0 +1,105 @@
+@import "./base.css";
+
+.mc-wallet {
+  --color-wallet-trigger-icon: var(--color-secondary-400);
+  --color-wallet-disconnect-text: var(--color-red-400);
+  --color-wallet-disconnect-text-highlight: var(--color-text-neutral);
+  --color-wallet-disconnect-bg-highlight: color-mix(in srgb, var(--color-red-600) 40%, transparent);
+  --color-separator: var(--color-neutral-500);
+
+  & > dialog {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition:
+      opacity 150ms ease-in-out,
+      transform 150ms ease-out,
+      display 150ms ease-out allow-discrete,
+      overlay 150ms ease-out allow-discrete;
+  }
+
+  & > dialog[open] {
+    transform: scaleY(1);
+    opacity: 1;
+
+    @starting-style {
+      transform: scaleY(0);
+      opacity: 0;
+    }
+  }
+
+  & .mc-wallet-icon {
+    width: 1.5em;
+    display: inline-block;
+    margin-right: var(--spacing-2);
+  }
+
+  & .mc-wallet-provider {
+    font-size: var(--font-size-xl);
+  }
+
+  & .mc-wallet-provider-logo {
+    width: 1.5em;
+    display: inline-block;
+    margin-right: var(--spacing-3);
+  }
+
+  & .mc-dropdown-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & > .mc-wallet-trigger {
+    width: 100%;
+    min-width: 12em;
+
+    & .mc-wallet-trigger-icon {
+      color: var(--color-wallet-trigger-icon);
+    }
+  }
+
+  & .mc-wallet-disconnect {
+    color: var(--color-wallet-disconnect-text);
+    border-top: 1px solid var(--color-separator);
+  }
+
+  & .mc-wallet-close {
+    border-top: 1px solid var(--color-separator);
+  }
+
+  & .mc-wallet-disconnect:hover {
+    color: var(--color-wallet-disconnect-text-highlight);
+    background-color: var(--color-wallet-disconnect-bg-highlight);
+    border-color: transparent;
+  }
+
+  & .mc-wallet-addr {
+    cursor: default;
+    font-family: var(--font-family-mono);
+    font-weight: 500;
+    border-bottom: 1px solid var(--color-separator);
+  }
+
+  & .mc-wallet-token {
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > .mc-token-icon > img {
+      width: 2em;
+      display: inline-block;
+      margin-right: var(--spacing-1_5);
+      filter: grayscale(0.2);
+      box-shadow: var(--drop-shadow-sm);
+      border-radius: var(--radius-lg);
+    }
+
+    & > .mc-wallet-token-amount {
+      color: var(--color-text-neutral);
+      margin-right: var(--spacing-2);
+      font-weight: 400;
+    }
+  }
+}

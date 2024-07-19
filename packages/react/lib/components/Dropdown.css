@@ -1,0 +1,49 @@
+@import "./base.css";
+
+.mc-dropdown {
+  --color-content-bg: var(--color-bg-neutral);
+  --color-content-sep: var(--color-border-neutral);
+
+  position: relative;
+
+  & > button {
+    width: 100%;
+  }
+
+  & > .mc-dropdown-dialog {
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    min-width: var(--width-xs);
+    margin-top: var(--spacing-1);
+    background-color: var(--color-content-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--drop-shadow-lg);
+
+    &.mc-dropdown-dialog-start {
+      left: 0;
+    }
+
+    &.mc-dropdown-dialog-end {
+      left: auto;
+    }
+
+    & > .mc-dropdown-content {
+      & > li button {
+        min-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      & > li:first-child button {
+        border-top-left-radius: var(--radius-lg);
+        border-top-right-radius: var(--radius-lg);
+      }
+
+      & > li:last-child button {
+        border-bottom-right-radius: var(--radius-lg);
+        border-bottom-left-radius: var(--radius-lg);
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-.mc-component {
+.mc-base {
   --color-bg-neutral: var(--color-neutral-950);
   --color-bg-neutral-highlight: var(--color-neutral-900);
   --color-bg-primary: var(--color-primary-500);
@@ -75,7 +75,6 @@
     background-color: var(--color-bg-secondary);
     border-color: var(--color-border-secondary);
 
-
     &:hover {
       color: var(--color-text-secondary-highlight);
       background-color: var(--color-bg-secondary-highlight);
@@ -96,17 +95,17 @@
   }
 
   & h1 {
-    font-size: var(--font-size-5xl);
     margin-top: var(--spacing-4);
     margin-bottom: var(--spacing-6);
+    font-size: var(--font-size-5xl);
     font-weight: 700;
     color: var(--color-title);
   }
 
   & h2 {
-    font-size: var(--font-size-3xl);
     margin-top: var(--spacing-2);
     margin-bottom: var(--spacing-4);
+    font-size: var(--font-size-3xl);
     font-weight: 700;
     color: var(--color-title);
   }
@@ -129,7 +128,8 @@
 }
 
 @media (prefers-reduced-motion) {
-  .mc-component * {
+  /* TODO: make sure this actually works */
+  .mc-base * {
     transition: none !important;
   }
 }

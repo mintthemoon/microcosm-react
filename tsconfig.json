@@ -12,6 +12,7 @@
     "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "strict": true,
+    "strictNullChecks": true,
     "target": "ES2022",
     "jsx": "react-jsx",
     "noUncheckedIndexedAccess": true,

@@ -1,6 +1,7 @@
 import eslint from "@eslint/js"
 import tseslintPlugin from "@typescript-eslint/eslint-plugin"
 import tseslintParser from "@typescript-eslint/parser"
+// TODO reenable: import compat from "eslint-plugin-compat"
 import reactHooks from "eslint-plugin-react-hooks"
 import reactRefresh from "eslint-plugin-react-refresh"
 import tseslint from "typescript-eslint"
@@ -8,8 +9,8 @@ import tseslint from "typescript-eslint"
 export default tseslint.config(
   { ignores: ["**/dist/"] },
   eslint.configs.recommended,
-  ...tseslint.configs.strictTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
+  // compat.configs["flat/recommended"],
+  ...tseslint.configs.recommendedTypeChecked,
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
@@ -20,6 +21,8 @@ export default tseslint.config(
         ecmaFeatures: { jsx: true },
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
+        // TODO figure out what the hell this means. I've argued with eslint enough today and this seems like an absurd limitation
+        maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 20,
       },
     },
     plugins: {

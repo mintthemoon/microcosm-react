@@ -41,17 +41,19 @@
   --color-light: var(--color-neutral-100);
 }
 
-.mc-component {
+.mc-base {
   --color-bg-neutral: var(--color-neutral-600);
   --color-bg-neutral-highlight: var(--color-neutral-500);
   --color-text: var(--color-light);
   --color-title: var(--color-dark);
 }
 
-dialog.mc-dialog {
+dialog.mc-modal {
   --color-overlay-bg: color-mix(in srgb, var(--color-primary-200) 97%, transparent);
   --color-content-bg: var(--color-neutral-400);
 }
+
+.mc-dropdown {}
 
 html, body {
   width: 100%;

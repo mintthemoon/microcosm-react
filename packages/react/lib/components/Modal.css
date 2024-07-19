@@ -1,6 +1,6 @@
 @import "./base.css";
 
-dialog.mc-dialog {
+dialog.mc-modal {
   --color-content-bg: var(--color-bg-neutral);
   --color-overlay-bg: var(--color-neutral-600);
   --color-content-sep: var(--color-border-neutral);
@@ -19,27 +19,27 @@ dialog.mc-dialog {
   }
 
   &[open] {
-    opacity: 1;
     pointer-events: inherit;
-    animation: fadeIn var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
-  }
-
-  &[open]::backdrop {
     opacity: 1;
-    animation: fadeIn var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
+    animation: fade-in var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
+
+    &::backdrop {
+      opacity: 1;
+      animation: fade-in var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
+    }
   }
 
-  &.mc-dialog-closing {
+  &.mc-modal-closing {
     opacity: 0;
-    animation: fadeOut var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
+    animation: fade-out var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
+
+    &::backdrop {
+      opacity: 0;
+      animation: fade-out var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
+    }
   }
 
-  &.mc-dialog-closing::backdrop {
-    opacity: 0;
-    animation: fadeOut var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
-  }
-
-  & > div.mc-dialog-container {
+  & > div.mc-modal-container {
     position: fixed;
     inset: 0;
     display: flex;
@@ -50,7 +50,7 @@ dialog.mc-dialog {
     padding: 0;
     overflow-y: auto;
 
-    & > section.mc-dialog-content {
+    & > section.mc-modal-content {
       position: relative;
       min-width: var(--width-md);
       max-width: var(--width-lg);
@@ -66,22 +66,21 @@ dialog.mc-dialog {
         align-items: center;
         justify-content: space-between;
         padding: var(--spacing-2) var(--spacing-1);
-        margin: -1em -1em -1em -1em;
+        margin: -1em;
         border-bottom: 1px solid var(--color-content-sep);
 
         & > h2 {
           display: inline-flex;
           margin: var(--spacing-4) 0 var(--spacing-2) var(--spacing-2);
-          color: var(--color-dialog-title)
+          color: var(--color-dialog-title);
         }
 
         & > form {
           display: flex;
           margin-top: -1em;
-          
+
           & > button {
             font-size: var(--font-size-sm);
-            
           }
         }
       }
@@ -89,33 +88,34 @@ dialog.mc-dialog {
   }
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
 
-
-@keyframes fadeOut {
+@keyframes fade-out {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
 }
 
 @media (width >= 40rem) {
-  dialog.mc-dialog > div.mc-dialog-container {
+  dialog.mc-modal > div.mc-modal-container {
     align-items: center;
   }
 }
 
 @media (width >= 64rem) {
-  dialog.mc-dialog > div.mc-dialog-container > section.mc-dialog-content {
+  dialog.mc-modal > div.mc-modal-container > section.mc-modal-content {
     min-width: var(--width-lg);
     max-width: var(--width-xl);
   }

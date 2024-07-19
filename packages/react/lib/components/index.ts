@@ -1,3 +1,3 @@
-import { Dialog } from "./Dialog"
-
-export { Dialog }
+export { Dropdown, DropdownItem } from "./Dropdown"
+export { Modal } from "./Modal"
+export { Wallet } from "./Wallet"

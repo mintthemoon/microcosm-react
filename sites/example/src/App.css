@@ -1,7 +1,7 @@
 @import "@microcosm/react/base.css";
 
-.mc-component {
-  --color-title: var(---color-primary-600);
+.mc-base {
+  --color-title: var(--color-primary-600);
 }
 
 main {
