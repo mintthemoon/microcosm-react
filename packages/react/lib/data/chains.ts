@@ -1,7 +1,14 @@
 import type { Asset, ChainData, ChainDefaults, FeeDenom } from "$types"
-import type { AssetList as RegistryAssetList, Chain as RegistryChain } from "@chain-registry/v2-types"
+import type {
+  Asset as RegistryAsset,
+  AssetList as RegistryAssetList,
+  Chain as RegistryChain,
+  FeeToken as RegistryFeeToken,
+} from "@chain-registry/v2-types"
 import { assetList as mainnetAssets, chain as mainnetChain } from "@chain-registry/v2/mainnet/kujira"
 import { assetList as testnetAssets, chain as testnetChain } from "@chain-registry/v2/testnet/kujiratestnet"
+import type { ChainInfo as KujiraChainInfo } from "@keplr-wallet/types"
+import { CHAIN_INFO as kujiraChainInfo, type NETWORK as KujiraNetwork } from "kujira.js/network"
 import moize from "moize"
 
 type RegistryChainData = { chain: RegistryChain; assetList: RegistryAssetList }
@@ -26,92 +33,128 @@ const chainOverrides = new Map<string, Partial<ChainData>>([["harpoon-4", {
   }]]),
 }]])
 
-const preprocessChainRegistryData = (chain: RegistryChainData) => {
-  const { chain: registryInfo, assetList: { assets: registryAssets } } = chain
-  const { chainId, prettyName: displayName, chainName: registryName, logoURIs, fees: registryFees } =
-    registryInfo
-  let defaults = chainDefaults.get(chainId)
-  if (!defaults) {
-    console.warn(`Missing config defaults for ${chainId}`)
-  }
+const newAsset = (base: string, symbol: string | undefined, exponent: number, logoUrl?: string): Asset => {
+  const scaleBase = moize((amount: bigint) => {
+    return Number(amount) / 10 ** exponent
+  })
+  return { base, symbol, exponent, logoUrl, scaleBase }
+}
+
+const preprocessRegistryAssets = (registryAssets: RegistryAsset[]) => {
   const assets = new Map<string, Asset>()
   const symbols = new Map<string, string>()
-  for (const asset of registryAssets) {
-    const { base, symbol, display, denomUnits, logoURIs } = asset
+  for (const { base, symbol, display, denomUnits, logoURIs } of registryAssets) {
     const baseUnit = denomUnits.find(unit => unit.denom === base)
     const displayUnit = denomUnits.find(unit => unit.denom === display)
     if (!baseUnit || !displayUnit) {
-      console.warn(`Missing denom unit info for ${symbol} (${chainId})`)
+      console.warn(`Missing denom unit info for ${symbol}`)
       continue
     }
     const exponent = displayUnit.exponent - baseUnit.exponent
-    const scaleBase = moize((amount: bigint) => {
-      return Number(amount) / 10 ** exponent
-    })
-    assets.set(symbol, { base, symbol, exponent, logoUrl: logoURIs?.png ?? undefined, scaleBase })
+    const asset = newAsset(base, symbol, exponent, logoURIs?.png ?? undefined)
+    assets.set(symbol, asset)
     symbols.set(base, symbol)
   }
-  const logoUrl = logoURIs?.png ?? undefined
-  if (!registryFees?.feeTokens) {
-    throw new Error(`Missing fee info from chain registry data for ${chainId} (${registryName})`)
+  return { assets, symbols }
+}
+
+const preprocessRegistryFees = (
+  registryFeeTokens: RegistryFeeToken[] | undefined,
+  symbols: Map<string, string>,
+  assets: Map<string, Asset>,
+) => {
+  if (!registryFeeTokens) {
+    console.warn("Missing fee info from chain registry data")
+    return { fees: undefined, firstFeeSymbol: undefined }
   }
   const fees = new Map<string, FeeDenom>()
-  let defaultFeeSymbol = defaults?.feeSymbol
-  for (const feeDenom of registryFees.feeTokens) {
+  let firstFeeSymbol = null
+  for (const feeDenom of registryFeeTokens) {
     const { denom, fixedMinGasPrice, lowGasPrice, averageGasPrice, highGasPrice } = feeDenom
-
     const gasPrice = averageGasPrice ?? highGasPrice ?? lowGasPrice
     if (!gasPrice) {
-      console.warn(`Missing gas price for fee denom ${denom} (${chainId})`)
+      console.warn(`Missing gas price for fee denom ${denom}`)
       continue
     }
     const symbol = symbols.get(denom)
     if (!symbol) {
-      console.warn(`Missing asset symbol for fee denom ${denom} (${chainId})`)
+      console.warn(`Missing asset symbol for fee denom ${denom}`)
       continue
     }
     const asset = assets.get(symbol)
     if (!asset) {
-      console.warn(`Missing asset info for fee denom ${denom} (${chainId})`)
+      console.warn(`Missing asset info for fee denom ${denom}`)
       continue
     }
     const { exponent } = asset
     fees.set(symbol, { base: denom, symbol, exponent, gasPrice, minGasPrice: fixedMinGasPrice })
-    if (!defaults && !defaultFeeSymbol) {
-      defaultFeeSymbol = symbol
+    if (!firstFeeSymbol) {
+      firstFeeSymbol = symbol
     }
   }
-  if (!defaults) {
-    if (!defaultFeeSymbol) {
-      throw new Error(`No valid fee denoms found for ${chainId} (${registryName})`)
-    }
-    defaults = { feeSymbol: defaultFeeSymbol, gasAdjustment: 1.5 }
-  }
-  const getAsset = moize((base: string) => {
-    const symbol = symbols.get(base)
-    if (!symbol) return undefined
-    return assets.get(symbol)
-  })
-  const override = chainOverrides.get(chainId)
-  return {
-    chainId,
-    displayName,
-    logoUrl,
-    assets,
-    symbols,
-    fees,
-    defaults,
-    getAsset,
-    ...override,
-  } as ChainData
+  return { fees, firstFeeSymbol }
 }
 
+const preprocessChainRegistryData = (chain: RegistryChainData) => {
+  const { chain: registryInfo, assetList: { assets: registryAssets } } = chain
+  const { chainId, prettyName: displayName, logoURIs, fees: registryFees } = registryInfo
+  let defaults = chainDefaults.get(chainId)
+  if (!defaults) {
+    console.warn(`Missing config defaults for ${chainId}`)
+  }
+  const { assets, symbols } = preprocessRegistryAssets(registryAssets)
+  const logoUrl = logoURIs?.png ?? undefined
+  const { fees, firstFeeSymbol } = preprocessRegistryFees(registryFees?.feeTokens, symbols, assets)
+  if (!defaults && firstFeeSymbol) {
+    defaults = { feeSymbol: firstFeeSymbol, gasAdjustment: 1.5 }
+  }
+  return { chainId, displayName, logoUrl, assets, symbols, fees, defaults } as Partial<ChainData>
+}
+
+const preprocessKujiraNetworkData = (chainInfo: KujiraChainInfo) => {
+  const { chainId, chainName: displayName, feeCurrencies: kujiraFees } = chainInfo
+  const fees = new Map<string, FeeDenom>()
+  const symbols = new Map<string, string>()
+  const assets = new Map<string, Asset>()
+  for (const { coinDenom: symbol, coinMinimalDenom: base, coinDecimals: exponent, gasPriceStep } of kujiraFees) {
+    const asset = newAsset(base, symbol, exponent)
+    assets.set(symbol, asset)
+    symbols.set(base, symbol)
+    if (!gasPriceStep) continue
+    const gasPrice = gasPriceStep.average
+    const fee = { base, symbol, exponent, gasPrice }
+    fees.set(symbol, fee)
+  }
+  return { chainId, displayName, assets, symbols, fees } as Partial<ChainData>
+}
 export const getChain = moize((chainId: string) => {
   const registryChain = registryChains.get(chainId)
   if (!registryChain) {
     throw new Error(`Chain ${chainId} not found in registry`)
   }
-  const data = preprocessChainRegistryData(registryChain)
-  console.log("getChain", chainId, data)
-  return data
+  console.log("getChain:registry", registryChain)
+  const registryData = preprocessChainRegistryData(registryChain)
+  console.log("getChain:registryData", registryData)
+  const kujiraChain = kujiraChainInfo[chainId as KujiraNetwork]
+  console.log("getChain:kujira", kujiraChain)
+  const kujiraData = kujiraChain ? preprocessKujiraNetworkData(kujiraChain) : {}
+  console.log("getChain:kujiraData", kujiraData)
+  const override = chainOverrides.get(chainId)
+  console.log("getChain:override", override)
+  const data = { ...registryData, ...kujiraData, ...override }
+  console.log("getChain:data", data)
+  const getAsset = moize((base: string) => {
+    const symbol = data.symbols?.get(base)
+    if (!symbol) return undefined
+    return data.assets?.get(symbol)
+  })
+  return { ...data, getAsset } as ChainData
 })
+
+// preload
+try {
+  getChain("kaiyo-1")
+  getChain("harpoon-4")
+} catch (e) {
+  console.error("Error processing chain data:", e)
+}

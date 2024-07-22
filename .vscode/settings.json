@@ -8,8 +8,14 @@
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "html"],
   "files.associations": { "*.css": "tailwindcss" },
   "css.validate": false,
+  "stylelint.validate": ["tailwindcss"],
   "editor.quickSuggestions": { "strings": "on" },
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
-  "editor.guides.bracketPairs": "active"
+  "editor.guides.bracketPairs": "active",
+  "[tailwindcss]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "always"
+    }
+  }
 }

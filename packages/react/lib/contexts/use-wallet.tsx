@@ -3,8 +3,7 @@ import { defaultWalletState, getProvider } from "$lib/wallet"
 import type { WalletContext } from "$types"
 import { buildHooks } from "$util"
 import { type DeliverTxResponse, SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate"
-import type { OfflineSigner } from "@cosmjs/proto-signing"
-import { coins, type EncodeObject } from "@cosmjs/proto-signing"
+import { coins, type EncodeObject, type OfflineSigner } from "@cosmjs/proto-signing"
 import { SigningStargateClient } from "@cosmjs/stargate"
 import { useCallback, useEffect } from "react"
 import { WalletDispatchContext, WalletStateContext } from "./ctx-wallet"
@@ -26,7 +25,7 @@ export const useWallet = (): WalletContext => {
     dispatch({ signer, isReady: false })
   }, [dispatch])
 
-  const setProvider = useCallback((name: string) => {
+  const connect = useCallback((name: string) => {
     try {
       if (!chainId || name === state.provider?.name) return
       dispatch({ isReady: false })
@@ -42,7 +41,7 @@ export const useWallet = (): WalletContext => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, chainId, state.provider, state.onProviderDisconnect, setError])
 
-  const disconnectProvider = useCallback(() => {
+  const disconnect = useCallback(() => {
     if (state.onProviderDisconnect) state.onProviderDisconnect()
     dispatch(defaultWalletState)
     WalletConnectionStore.delete()
@@ -63,7 +62,6 @@ export const useWallet = (): WalletContext => {
         const feeAmount = Math.ceil(gasAdjusted * feeDenom.gasPrice)
         console.log("Gas estimate:", gasAdjusted)
         const fee = { amount: coins(feeAmount.toString(), feeDenom.base), gas: gasAdjusted.toString() }
-
         return await state.stargateSignClient.signAndBroadcast(state.account.address, messages, fee, memo)
       } catch (error) {
         console.error("Broadcast failed:", error)
@@ -99,9 +97,9 @@ export const useWallet = (): WalletContext => {
   useEffect(() => {
     if (!state.provider) {
       const provider = WalletConnectionStore.get()?.provider
-      if (provider) setProvider(provider)
+      if (provider) connect(provider)
     }
   })
 
-  return { ...state, setProvider, disconnectProvider, broadcast }
+  return { ...state, connect, disconnect, broadcast }
 }

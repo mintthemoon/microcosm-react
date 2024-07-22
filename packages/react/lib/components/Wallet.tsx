@@ -9,11 +9,12 @@ import { TokenIcon } from "./TokenIcon"
 import "./Wallet.css"
 
 export const Wallet = forwardRef<HTMLDialogElement, WalletProps>(({ featuredTokens, align }, ref) => {
-  const { addr, isReady: isWalletReady, setProvider, disconnectProvider } = useWallet()
+  const { addr, isReady: isWalletReady, connect, disconnect } = useWallet()
   const { isReady: isChainReady, queryAddrTokens } = useChain()
   const { setError } = useError()
   const [tokens, setTokens] = useState<Tokens>()
 
+  // TODO make these render funcs components
   const renderWalletTrigger = useCallback((open: () => void) => {
     return (
       <button type="button" onClick={open} className="mc-wallet-trigger">
@@ -30,7 +31,7 @@ export const Wallet = forwardRef<HTMLDialogElement, WalletProps>(({ featuredToke
       <DropdownItem
         key={name}
         onClick={() => {
-          setProvider(name)
+          connect(name)
         }}
         className="mc-wallet-provider"
       >
@@ -38,7 +39,7 @@ export const Wallet = forwardRef<HTMLDialogElement, WalletProps>(({ featuredToke
         {name}
       </DropdownItem>
     )
-  }, [setProvider])
+  }, [connect])
 
   const renderToken = useCallback((token: Token) => {
     const displayName = token.denom.symbol ?? token.denom.base
@@ -67,12 +68,12 @@ export const Wallet = forwardRef<HTMLDialogElement, WalletProps>(({ featuredToke
       <>
         <DropdownItem className="mc-wallet-addr">{fmtAddrLong(addr)}</DropdownItem>
         {renderTokens()}
-        <DropdownItem onClick={disconnectProvider} className="mc-wallet-disconnect">
+        <DropdownItem onClick={disconnect} className="mc-wallet-disconnect">
           <LinkSlashIcon className="mc-wallet-icon" />Disconnect
         </DropdownItem>
       </>
     )
-  }, [isWalletReady, addr, renderTokens, renderProviderSelect, disconnectProvider])
+  }, [isWalletReady, addr, renderTokens, renderProviderSelect, disconnect])
 
   const fetchTokens = useCallback(async () => {
     if (!isChainReady || !addr) return
@@ -89,7 +90,7 @@ export const Wallet = forwardRef<HTMLDialogElement, WalletProps>(({ featuredToke
   }, [fetchTokens, setError])
 
   return (
-    <Dropdown ref={ref} triggerRender={renderWalletTrigger} className="mc-wallet" align={align ?? "end"}>
+    <Dropdown ref={ref} renderTrigger={renderWalletTrigger} className="mc-wallet" align={align ?? "end"}>
       {renderDropdownContent()}
       <DropdownItem closeDropdown className="mc-wallet-close">
         <ChevronUpIcon className="mc-wallet-icon" />Close

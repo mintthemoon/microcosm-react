@@ -4,15 +4,15 @@ import {
   type Dispatch,
   type PropsWithChildren,
   useContext,
+  useMemo,
   useReducer,
 } from "react"
 
-export const buildContext = <T extends Record<string, unknown>, C extends Partial<T>>(initialState: T) => {
-  type ContextState = T
+export const buildContext = <S extends Record<string, unknown>, C extends Partial<S>>(initialState: S) => {
+  type ContextState = S
   type ContextAction = Partial<ContextState>
   type ContextConfig = C
   type ContextProps = PropsWithChildren<{ config?: ContextConfig }>
-
   const contextReducer = (state: ContextState, action: ContextAction): ContextState => ({
     ...state,
     ...action,
@@ -21,14 +21,13 @@ export const buildContext = <T extends Record<string, unknown>, C extends Partia
   const DispatchContext = createContext<Dispatch<ContextAction> | undefined>(undefined)
   const ContextProvider = ({ children, config }: ContextProps) => {
     const [state, dispatch] = useReducer(contextReducer, initialState)
-
+    const mergedState = useMemo(() => ({ ...state, ...config }), [state, config])
     return (
-      <StateContext.Provider value={{ ...state, ...config }}>
+      <StateContext.Provider value={mergedState}>
         <DispatchContext.Provider value={dispatch}>{children}</DispatchContext.Provider>
       </StateContext.Provider>
     )
   }
-
   return { ContextProvider, StateContext, DispatchContext }
 }
 

@@ -4,7 +4,7 @@ import "./Dropdown.css"
 import { cn } from "$util"
 
 export const Dropdown = forwardRef<HTMLDialogElement, DropdownProps>(
-  ({ children, triggerLabel, triggerRender, align, className }, ref) => {
+  ({ children, triggerLabel, renderTrigger, align, className }, ref) => {
     const internalRef = useRef<HTMLDialogElement>(null) as MutableRefObject<HTMLDialogElement>
     useImperativeHandle(ref, () => internalRef.current)
 
@@ -12,14 +12,10 @@ export const Dropdown = forwardRef<HTMLDialogElement, DropdownProps>(
       internalRef.current.show()
     }
 
-    // const close = () => {
-    //   internalRef.current.close()
-    // }
-
     return (
       <div className={cn("mc-dropdown mc-base", className)}>
-        {triggerRender ?
-          triggerRender(open) :
+        {renderTrigger ?
+          renderTrigger(open) :
           (
             <button type="button" onClick={open} className="mc-dropdown-trigger">
               {triggerLabel ?? "Open Dropdown"}

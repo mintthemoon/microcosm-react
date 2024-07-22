@@ -30,8 +30,8 @@
 
   & .mc-wallet-icon {
     display: inline-block;
-    width: 1.5em;
-    margin-right: var(--spacing-2);
+    inline-size: 1.5em;
+    margin-inline-end: var(--spacing-2);
   }
 
   & .mc-wallet-provider {
@@ -40,8 +40,8 @@
 
   & .mc-wallet-provider-logo {
     display: inline-block;
-    width: 1.5em;
-    margin-right: var(--spacing-3);
+    inline-size: 1.5em;
+    margin-inline-end: var(--spacing-3);
   }
 
   & .mc-dropdown-item {
@@ -51,8 +51,8 @@
   }
 
   & > .mc-wallet-trigger {
-    width: 100%;
-    min-width: 12em;
+    inline-size: 100%;
+    min-inline-size: 12em;
 
     & .mc-wallet-trigger-icon {
       color: var(--color-wallet-trigger-icon);
@@ -61,11 +61,11 @@
 
   & .mc-wallet-disconnect {
     color: var(--color-wallet-disconnect-text);
-    border-top: 1px solid var(--color-separator);
+    border-block-start: 1px solid var(--color-separator);
   }
 
   & .mc-wallet-close {
-    border-top: 1px solid var(--color-separator);
+    border-block-start: 1px solid var(--color-separator);
   }
 
   & .mc-wallet-disconnect:hover {
@@ -78,7 +78,7 @@
     font-family: var(--font-family-mono);
     font-weight: 500;
     cursor: default;
-    border-bottom: 1px solid var(--color-separator);
+    border-block-end: 1px solid var(--color-separator);
   }
 
   & .mc-wallet-token {
@@ -89,15 +89,15 @@
 
     & > .mc-token-icon > img {
       display: inline-block;
-      width: 2em;
-      margin-right: var(--spacing-1_5);
+      inline-size: 2em;
+      margin-inline-end: var(--spacing-1_5);
       filter: grayscale(0.2);
       border-radius: var(--radius-lg);
       box-shadow: var(--drop-shadow-sm);
     }
 
     & > .mc-wallet-token-amount {
-      margin-right: var(--spacing-2);
+      margin-inline-end: var(--spacing-2);
       font-weight: 400;
       color: var(--color-text-neutral);
     }

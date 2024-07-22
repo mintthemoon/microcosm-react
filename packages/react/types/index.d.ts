@@ -1,5 +1,4 @@
 export * from "./components"
 export * from "./contexts"
 export * from "./data"
-export * from "./wallet"
 export * from "./utility"

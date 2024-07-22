@@ -1,4 +1,4 @@
-import type { WalletProvider } from "$lib/types"
+import type { WalletProvider } from "$types"
 import type { OfflineSigner } from "@cosmjs/proto-signing"
 import { KeplrLogo } from "./logo"
 

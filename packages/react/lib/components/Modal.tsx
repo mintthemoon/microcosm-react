@@ -1,4 +1,4 @@
-import type { DialogProps } from "$types"
+import type { ModalProps } from "$types"
 import { cn } from "$util"
 import {
   forwardRef,
@@ -10,6 +10,14 @@ import {
   useState,
 } from "react"
 import "./Modal.css"
+
+// TODO there is in fact a better way. well it's not fully supported in all browsers yet but probably good enough
+// who cares about firefox for android anyways? it's just animation they can deal.
+// what we need to do is transition _all_ the properties we're managing here
+// that includes `display` from `none` to `flex`, and an `overlay` property I don't really understand
+// this requires support for `allow-discrete` in transitions which lets it work with the mentioned props
+// see the wallet dropdown for an example (though simpler due to no backdrop)
+
 
 // if you're squinting at this thinking "this can't be the best way", I'm right there with you
 // the HTML5 dialog element turns out to be very difficult to animate properly without losing functionality
@@ -35,7 +43,7 @@ import "./Modal.css"
 //   - we use an async callback for the delay, and intentionally ignore the Promise it returns because
 //     even `setTimeout` takes a bit too long to be blocking the main loop with it.
 // if you've got a better method which addresses those issues I'd love to see the PR :)
-const AnimatedModal = forwardRef<HTMLDialogElement, DialogProps>(({ children, ...props }, ref) => {
+const AnimatedModal = forwardRef<HTMLDialogElement, ModalProps>(({ children, ...props }, ref) => {
   const [isClosing, setIsClosing] = useState(false)
   const internalRef = useRef<HTMLDialogElement>() as MutableRefObject<HTMLDialogElement>
 
@@ -79,7 +87,7 @@ const AnimatedModal = forwardRef<HTMLDialogElement, DialogProps>(({ children, ..
   return <dialog ref={internalRef} {...props}>{children}</dialog>
 })
 
-export const Modal = forwardRef<HTMLDialogElement, DialogProps>(
+export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
   ({ children, className, title, ...props }, ref) => {
     return (
       <AnimatedModal ref={ref} className={cn("mc-modal mc-base", className)} {...props}>

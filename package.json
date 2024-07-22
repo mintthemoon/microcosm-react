@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "lerna run dev",
+    "dev": "lerna run --parallel dev",
     "build": "lerna run build",
     "test": "lerna run test",
     "publish": "npm run build && lerna publish",
@@ -20,7 +20,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "@culur/config-stylelint": "^1.0.4",
     "@eslint/js": "^9.7.0",
     "@types/eslint__js": "^8.42.3",
     "@types/node": "^20.14.10",
@@ -40,10 +39,15 @@
     "stylelint-config-standard": "^36.0.1",
     "stylelint-css-modules": "^1.2.2",
     "stylelint-plugin-defensive-css": "^1.0.4",
+    "stylelint-plugin-logical-css": "^1.2.1",
     "stylelint-use-nesting": "^5.1.1",
     "tailwindcss": "4.0.0-alpha.17",
     "typescript": "^5.5.3",
     "typescript-eslint": "8.0.0-alpha.44"
   },
-  "dependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" }
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "packageManager": "pnpm@9.5.0"
 }

@@ -1,5 +1,9 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-  "linter": { "enabled": true, "rules": { "recommended": true }, "ignore": ["**/dist/*"] },
+  "linter": {
+    "enabled": true,
+    "rules": { "recommended": true },
+    "ignore": ["**/dist/*", "**/node_modules/*"]
+  },
   "css": { "linter": { "enabled": true } }
 }

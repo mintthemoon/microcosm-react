@@ -4,14 +4,15 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "./lib",
-    "declarationDir": "./dist/types",
+    "outDir": "./dist",
+    "types": ["./types"],
     "paths": {
       "$lib": ["./lib"],
       "$lib/*": ["./lib/*"],
       "$util": ["./lib/utility"],
       "$util/*": ["./lib/utility/*"],
-      "$types": ["./lib/types"],
-      "$types/*": ["./lib/types"]
+      "$types": ["./types"],
+      "$types/*": ["./types"]
     }
   },
   "include": ["lib/**/*.ts", "lib/**/*.tsx"]

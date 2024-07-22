@@ -7,42 +7,42 @@
   position: relative;
 
   & > button {
-    width: 100%;
+    inline-size: 100%;
   }
 
   & > .mc-dropdown-dialog {
     position: absolute;
-    top: 100%;
+    inset-block-start: 100%;
     z-index: 1;
-    min-width: var(--width-xs);
-    margin-top: var(--spacing-1);
+    min-inline-size: var(--width-xs);
+    margin-block-start: var(--spacing-1);
     background-color: var(--color-content-bg);
     border-radius: var(--radius-lg);
     box-shadow: var(--drop-shadow-lg);
 
     &.mc-dropdown-dialog-start {
-      left: 0;
+      inset-inline-start: 0;
     }
 
     &.mc-dropdown-dialog-end {
-      left: auto;
+      inset-inline-start: auto;
     }
 
     & > .mc-dropdown-content {
       & > li button {
-        min-width: 100%;
+        min-inline-size: 100%;
         border-radius: 0;
         box-shadow: none;
       }
 
       & > li:first-child button {
-        border-top-left-radius: var(--radius-lg);
-        border-top-right-radius: var(--radius-lg);
+        border-start-start-radius: var(--radius-lg);
+        border-start-end-radius: var(--radius-lg);
       }
 
       & > li:last-child button {
-        border-bottom-right-radius: var(--radius-lg);
-        border-bottom-left-radius: var(--radius-lg);
+        border-end-start-radius: var(--radius-lg);
+        border-end-end-radius: var(--radius-lg);
       }
     }
   }

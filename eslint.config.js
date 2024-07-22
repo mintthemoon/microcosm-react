@@ -2,12 +2,14 @@ import eslint from "@eslint/js"
 import tseslintPlugin from "@typescript-eslint/eslint-plugin"
 import tseslintParser from "@typescript-eslint/parser"
 // TODO reenable: import compat from "eslint-plugin-compat"
+// need to figure out why it seems to not be respecting my browserslist in package.json
 import reactHooks from "eslint-plugin-react-hooks"
 import reactRefresh from "eslint-plugin-react-refresh"
 import tseslint from "typescript-eslint"
+import globals from "globals"
 
 export default tseslint.config(
-  { ignores: ["**/dist/"] },
+  { ignores: ["**/dist/", "**/node_modules/"] },
   eslint.configs.recommended,
   // compat.configs["flat/recommended"],
   ...tseslint.configs.recommendedTypeChecked,
@@ -47,4 +49,5 @@ export default tseslint.config(
     settings: { react: { version: "detect" } },
   },
   { files: ["**/*.{js,jsx}"], extends: [tseslint.configs.disableTypeChecked] },
+  { files: ["**/__bin__/**/*.{js,jsx}"], languageOptions: { globals: { ...globals.nodeBuiltin } } },
 )

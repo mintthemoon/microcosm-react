@@ -2,41 +2,37 @@ import type {
   ButtonHTMLAttributes,
   DetailedHTMLProps,
   DialogHTMLAttributes,
-  ForwardedRef,
   FunctionComponent,
+  PropsWithRef,
   ReactNode,
 } from "react"
 
-// DIALOG
-export type Dialog = ForwardedRef<HTMLDialogElement>
-
-export type DialogProps =
+// MODAL
+export declare const Modal: FunctionComponent<ModalProps>
+export type ModalProps =
   & DetailedHTMLProps<DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>
   & { title?: string }
 
 // DROPDOWN
-export type DropdownProps = {
+export declare const Dropdown: FunctionComponent<DropdownProps>
+export declare const DropdownItem: FunctionComponent<DropdownItemProps>
+export type DropdownProps = PropsWithRef<{
   children: ReactNode
   className?: string
   triggerLabel?: ReactNode
-  triggerRender?: (open: () => void) => ReactNode
+  renderTrigger?: (open: () => void) => ReactNode
   align?: "start" | "end"
-}
-
-export type Dropdown = ForwardedRef<HTMLDialogElement>
-
+}>
 export type DropdownItemProps =
   & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
   & { closeDropdown?: boolean; children: React.ReactNode }
 
-export type DropdownItem = ForwardedRef<HTMLButtonElement>
 
 // WALLET
+export declare const Wallet: FunctionComponent<WalletProps>
 export type WalletProps = { featuredTokens?: string[]; align?: "start" | "end" }
 
-export type Wallet = ForwardedRef<HTMLDialogElement>
 
 // TOKENS
+export declare const TokenIcon: FunctionComponent<TokenIconProps>
 export type TokenIconProps = { symbol: string }
-
-export type TokenIcon = FunctionComponent<TokenIconProps>

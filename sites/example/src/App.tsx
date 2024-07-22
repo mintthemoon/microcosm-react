@@ -1,9 +1,9 @@
-import { Dropdown, DropdownItem, Modal, useError, useWallet, Wallet } from "@microcosm/react"
+import { Dropdown, DropdownItem, Modal, useAsync, useError, useWallet, Wallet } from "@microcosm/react"
 import "./App.css"
-import { useCallback, useRef } from "react"
+import { useCallback, useEffect, useRef } from "react"
 
 export const App = () => {
-  const { isReady, broadcast, addr } = useWallet()
+  const { isReady: isWalletReady, broadcast, addr } = useWallet()
   const { setError } = useError()
   const modalRef = useRef<HTMLDialogElement | null>(null)
 
@@ -13,23 +13,30 @@ export const App = () => {
     }
   }
 
-  const sendTestTx = useCallback(async () => {
-    try {
-      if (!isReady || !addr) throw new Error("Wallet is not connected")
-      const message = {
-        typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-        value: {
-          fromAddress: addr,
-          toAddress: "kujira18we0s6dcn4mhefdl9t8f7u6kctgex042mt2q6l",
-          amount: [{ denom: "ukuji", amount: "100" }],
-        },
+  const { res: txRes, err: txErr, isReady: isTxReady, fn: sendTestTx } = useAsync(
+    useCallback(async () => {
+      try {
+        if (!isWalletReady || !addr) throw new Error("Wallet is not connected")
+        const message = {
+          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+          value: {
+            fromAddress: addr,
+            toAddress: "kujira18we0s6dcn4mhefdl9t8f7u6kctgex042mt2q6l",
+            amount: [{ denom: "ukuji", amount: "100" }],
+          },
+        }
+        return await broadcast([message], "Microcosm test transaction")
+      } catch (err) {
+        setError(err as Error)
       }
-      const res = await broadcast([message], "Microcosm test tx")
-      console.log("Test tx result", res)
-    } catch (err) {
-      setError(err as Error)
-    }
-  }, [isReady, addr, broadcast, setError])
+    }, [isWalletReady, addr, broadcast, setError]),
+    setError,
+  )
+
+  useEffect(() => {
+    if (!isTxReady) return
+    console.log("Transaction result:", txRes ?? txErr)
+  }, [isTxReady, txRes, txErr])
 
   return (
     <>
@@ -39,7 +46,7 @@ export const App = () => {
           <button type="button" onClick={openModal} className="mc-button-primary">Open Modal</button>
           <Dropdown
             align="end"
-            triggerRender={(open: () => void) => (
+            renderTrigger={(open: () => void) => (
               <button type="button" onClick={open} className="mc-button-secondary">Open Dropdown</button>
             )}
           >

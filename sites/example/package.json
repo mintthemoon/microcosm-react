@@ -14,14 +14,23 @@
     "test": "node ./__tests__/main.test.js",
     "preview": "vite preview"
   },
-  "files": ["lib"],
-  "repository": { "type": "git", "url": "git+https://github.com/mintthemoon/microcosm-react.git" },
-  "bugs": { "url": "https://github.com/mintthemoon/microcosm-react/issues" },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mintthemoon/microcosm-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mintthemoon/microcosm-react/issues"
+  },
   "devDependencies": {
     "@tailwindcss/vite": "4.0.0-alpha.17",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "vite": "^5.3.3",
     "vite-tsconfig-paths": "^4.3.2"
   },
-  "dependencies": { "@microcosm/react": "workspace:*" }
+  "dependencies": {
+    "@microcosm/react": "workspace:*"
+  }
 }
