@@ -14,7 +14,8 @@
     "build:js": "tswc -- lib -d dist --ignore '**/*.d.ts'",
     "build:css": "find ./lib -type f -iname \"*.css\" -exec sh -c 'lightningcss --minify --browserslist -d $(dirname {} | sed s:./lib:./dist:g) {}' \\;",
     "clean": "rm -rf dist",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "prepare": "npm run build"
   },
   "exports": {
     ".": {
