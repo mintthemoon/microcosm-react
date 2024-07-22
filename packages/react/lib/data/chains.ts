@@ -73,17 +73,17 @@ const preprocessRegistryFees = (
     const { denom, fixedMinGasPrice, lowGasPrice, averageGasPrice, highGasPrice } = feeDenom
     const gasPrice = averageGasPrice ?? highGasPrice ?? lowGasPrice
     if (!gasPrice) {
-      console.warn(`Missing gas price for fee denom ${denom}`)
+      console.warn(`Missing gas price for chain registry fee denom ${denom}`)
       continue
     }
     const symbol = symbols.get(denom)
     if (!symbol) {
-      console.warn(`Missing asset symbol for fee denom ${denom}`)
+      console.warn(`Missing asset symbol for chain registry fee denom ${denom}`)
       continue
     }
     const asset = assets.get(symbol)
     if (!asset) {
-      console.warn(`Missing asset info for fee denom ${denom}`)
+      console.warn(`Missing asset info for chain registry fee denom ${denom}`)
       continue
     }
     const { exponent } = asset
@@ -132,17 +132,11 @@ export const getChain = moize((chainId: string) => {
   if (!registryChain) {
     throw new Error(`Chain ${chainId} not found in registry`)
   }
-  console.log("getChain:registry", registryChain)
   const registryData = preprocessChainRegistryData(registryChain)
-  console.log("getChain:registryData", registryData)
   const kujiraChain = kujiraChainInfo[chainId as KujiraNetwork]
-  console.log("getChain:kujira", kujiraChain)
   const kujiraData = kujiraChain ? preprocessKujiraNetworkData(kujiraChain) : {}
-  console.log("getChain:kujiraData", kujiraData)
   const override = chainOverrides.get(chainId)
-  console.log("getChain:override", override)
   const data = { ...registryData, ...kujiraData, ...override }
-  console.log("getChain:data", data)
   const getAsset = moize((base: string) => {
     const symbol = data.symbols?.get(base)
     if (!symbol) return undefined

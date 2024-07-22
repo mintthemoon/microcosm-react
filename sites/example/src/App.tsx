@@ -54,7 +54,7 @@ export const App = () => {
             <DropdownItem>Dropdown content B</DropdownItem>
             <DropdownItem closeDropdown>Close</DropdownItem>
           </Dropdown>
-          <Wallet featuredTokens={["KUJI", "USK", "WINK"]} align="end" />
+          <Wallet featuredTokens={["KUJI", "USK", "WINK", "DEMO" ]} align="end" />
           <button type="button" onClick={sendTestTx} className="mc-button-secondary">Test Transaction</button>
         </section>
       </main>

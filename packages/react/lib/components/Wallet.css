@@ -1,7 +1,7 @@
 @import "./base.css";
 
 .mc-wallet {
-  --color-wallet-trigger-icon: var(--color-secondary-400);
+  --color-wallet-trigger-icon: var(--color-primary-400);
   --color-wallet-disconnect-text: var(--color-red-400);
   --color-wallet-disconnect-text-highlight: var(--color-text-neutral);
   --color-wallet-disconnect-bg-highlight: color-mix(in srgb, var(--color-red-600) 40%, transparent);
