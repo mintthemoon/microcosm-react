@@ -28,10 +28,6 @@
     },
     "./base.css": "./lib/components/base.css"
   },
-  "files": [
-    "lib",
-    "dist"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mintthemoon/microcosm-react.git"
@@ -43,6 +39,7 @@
     "@chain-registry/v2-types": "^0.49.28",
     "@keplr-wallet/types": "^0.12.111",
     "@swc/core": "^1.7.0",
+    "@types/lodash": "^4.17.7",
     "globals": "^15.8.0",
     "lightningcss-cli": "^1.25.1",
     "node-jq": "^6.0.1",
@@ -60,6 +57,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "kujira.js": "github:mintthemoon/kujira.js#dev",
+    "lodash": "^4.17.21",
     "moize": "^6.1.6",
     "tailwind-merge": "^2.4.0"
   }

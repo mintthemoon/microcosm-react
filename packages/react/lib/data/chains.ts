@@ -10,6 +10,7 @@ import { assetList as testnetAssets, chain as testnetChain } from "@chain-regist
 import type { ChainInfo as KujiraChainInfo } from "@keplr-wallet/types"
 import { CHAIN_INFO as kujiraChainInfo, type NETWORK as KujiraNetwork } from "kujira.js/network"
 import moize from "moize"
+import { merge } from  "lodash"
 
 type RegistryChainData = { chain: RegistryChain; assetList: RegistryAssetList }
 
@@ -24,14 +25,6 @@ const chainDefaults = new Map<string, ChainDefaults>([
   ["harpoon-4", { feeSymbol: "KUJI", gasAdjustment: 1.5 }],
 ])
 
-const chainOverrides = new Map<string, Partial<ChainData>>([["harpoon-4", {
-  fees: new Map<string, FeeDenom>([["KUJI", {
-    base: "ukuji",
-    symbol: "KUJI",
-    exponent: 6,
-    gasPrice: 0.0034,
-  }]]),
-}]])
 
 const newAsset = (base: string, symbol: string | undefined, exponent: number, logoUrl?: string): Asset => {
   const scaleBase = moize((amount: bigint) => {
@@ -39,6 +32,19 @@ const newAsset = (base: string, symbol: string | undefined, exponent: number, lo
   })
   return { base, symbol, exponent, logoUrl, scaleBase }
 }
+
+const chainOverrides = new Map<string, Partial<ChainData>>([["harpoon-4", {
+  fees: new Map<string, FeeDenom>([["KUJI", {
+    base: "ukuji",
+    symbol: "KUJI",
+    exponent: 6,
+    gasPrice: 0.0034,
+  }]]),
+  assets: new Map<string, Asset>([[
+    "USK", newAsset("factory/kujira1r85reqy6h0lu02vyz0hnzhv5whsns55gdt4w0d7ft87utzk7u0wqr4ssll/uusk", "USK", 6, )
+  ]])
+}]])
+
 
 const preprocessRegistryAssets = (registryAssets: RegistryAsset[]) => {
   const assets = new Map<string, Asset>()
@@ -136,7 +142,7 @@ export const getChain = moize((chainId: string) => {
   const kujiraChain = kujiraChainInfo[chainId as KujiraNetwork]
   const kujiraData = kujiraChain ? preprocessKujiraNetworkData(kujiraChain) : {}
   const override = chainOverrides.get(chainId)
-  const data = { ...registryData, ...kujiraData, ...override }
+  const data = merge(registryData, kujiraData, override)
   const getAsset = moize((base: string) => {
     const symbol = data.symbols?.get(base)
     if (!symbol) return undefined
