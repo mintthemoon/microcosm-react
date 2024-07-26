@@ -1,19 +1,7 @@
-import type { WalletProvider, WalletState } from "$types"
-
+import type { Wallet } from "$types"
 import { KeplrProvider } from "./keplr"
-
-const providers = new Map<string, WalletProvider>([KeplrProvider].map((p) => [p.name, p]))
-
-export const providerNames = Array.from(providers.keys())
-
-export const getProvider = (name: string): WalletProvider | undefined => {
-  return providers.get(name)
-}
-
-export const defaultWalletState: WalletState = {
-  addr: undefined,
-  account: undefined,
-  stargateSignClient: undefined,
-  provider: undefined,
-  isReady: false,
-}
+export { KeplrProvider }
+export { KeplrLogo, SonarLogo } from "./logo"
+export { SonarProvider } from "./sonar"
+// wallets not needing to register (aka not Sonar)
+export const StaticWallets: Record<string, Wallet> = { Keplr: KeplrProvider }

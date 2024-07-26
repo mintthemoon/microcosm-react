@@ -14,23 +14,6 @@ export type ChainData = {
   getAsset: (base: string) => Asset | undefined
 }
 
-// ======= WALLET =======
-// PROVIDER
-export type WalletProvider = {
-  name: string
-  logo: () => ReactNode | string
-  connect: WalletProviderConnectFn
-}
-export type WalletProviderCleanupFn = () => void
-export type WalletProviderConnectFn = (
-  chainId: string,
-  signerCb: (signer: OfflineSigner | undefined) => void,
-  errorCb: (err: Error) => void,
-) => Promise<WalletProviderCleanupFn>
-
-// STORE
-export type WalletConnectionStoreData = { provider: string }
-
 // ======= TOKENS =======
 export type Denom = { base: string; symbol?: string; exponent: number }
 export type FeeDenom = Denom & { gasPrice: number; minGasPrice?: number }

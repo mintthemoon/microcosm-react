@@ -1,8 +1,4 @@
-@import "@microcosm/react/base.css";
-
-.mc-base {
-  --color-title: var(--color-primary-600);
-}
+@import "@voidforge/react/base.css";
 
 main {
   display: flex;

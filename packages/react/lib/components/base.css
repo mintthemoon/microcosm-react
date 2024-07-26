@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-.mc-base {
+.vf-base {
   --color-bg-neutral: var(--color-neutral-950);
   --color-bg-neutral-highlight: var(--color-neutral-900);
   --color-bg-primary: var(--color-primary-500);
@@ -49,11 +49,11 @@
     }
   }
 
-  & .mc-button-sm {
+  & .vf-button-sm {
     font-size: var(--font-size-sm);
   }
 
-  & .mc-button-primary {
+  & .vf-button-primary {
     color: var(--color-text-primary);
     background-color: var(--color-bg-primary);
     border-color: var(--color-border-primary);
@@ -70,7 +70,7 @@
     }
   }
 
-  & .mc-button-secondary {
+  & .vf-button-secondary {
     color: var(--color-text-secondary);
     background-color: var(--color-bg-secondary);
     border-color: var(--color-border-secondary);
@@ -129,7 +129,7 @@
 
 @media (prefers-reduced-motion) {
   /* TODO: make sure this actually works */
-  .mc-base * {
+  .vf-base * {
     transition: none !important;
   }
 }

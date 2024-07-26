@@ -20,19 +20,12 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "@eslint/js": "^9.7.0",
-    "@types/eslint__js": "^8.42.3",
-    "@types/node": "^20.14.10",
+    "@types/node": "^20.14.12",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "8.0.0-alpha.44",
-    "@typescript-eslint/parser": "8.0.0-alpha.44",
+    "browserslist": "^4.23.2",
     "dprint": "^0.47.2",
-    "eslint": "^9.7.0",
-    "eslint-plugin-compat": "^6.0.0",
-    "eslint-plugin-react-hooks": "5.1.0-rc-8b08e99e-20240713",
-    "eslint-plugin-react-refresh": "^0.4.8",
-    "lerna": "^8.1.6",
+    "lerna": "^8.1.7",
     "lightningcss": "^1.25.1",
     "stylelint": "^16.7.0",
     "stylelint-config-recess-order": "^5.0.1",
@@ -42,8 +35,7 @@
     "stylelint-plugin-logical-css": "^1.2.1",
     "stylelint-use-nesting": "^5.1.1",
     "tailwindcss": "4.0.0-alpha.17",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "8.0.0-alpha.44"
+    "typescript": "^5.5.4"
   },
   "dependencies": {
     "react": "^18.3.1",

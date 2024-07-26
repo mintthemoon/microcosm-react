@@ -1,11 +1,11 @@
-# `@microcosm/react`
+# `@voidforge/react`
 
 > TODO: description
 
 ## Usage
 
 ```
-const react = require('@microcosm/react');
+const react = require('@voidforge/react');
 
 // TODO: DEMONSTRATE API
 ```

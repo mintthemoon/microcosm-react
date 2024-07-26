@@ -1,8 +1,8 @@
 import type { ClassValue } from "clsx"
-import type { Context, Dispatch, FunctionComponent, PropsWithChildren } from "react"
 
-// CLASS
+// REACT
 export declare const cn: (...args: ClassValue[]) => string
+export type PropsWithoutChildren<P> = Omit<P, "children">
 
 // FMT
 export declare const truncStr: (str: string | undefined, frontChars: number, backChars: number) => string
@@ -11,36 +11,20 @@ export declare const fmtAddrLong: (addr?: string) => string
 export declare const fmtDenom: (denom: string) => string
 export declare const fmtAmount: (amount: bigint | number) => string
 
-// HOOKS
-export declare const useAsync: <A extends unknown[], R>(fnAsync: (...args: A) => Promise<R>, onError?: (err: Error) => void) => {
-  res: R | undefined
-  err: Error | undefined
-  isReady: boolean
-  fn: (...args: A) => void
+// HELPERS (just some generally helpful types)
+export type EmptyRecord = Record<never, never>
+export type UnknownKey = string | number | symbol
+export type UnknownRecord = Record<UnknownKey, unknown>
+export type StrictSubset<T> = { [K in keyof T]?: T[K] }
+export type FlexSubset<T> = { [K in keyof T]?: T[K] | undefined }
+export type ShallowSubset<T> = StrictSubset<T> | FlexSubset<T>
+export type DeepStrictSubset<T> = {
+  [K in keyof T]?: T[K] extends UnknownRecord ? DeepStrictSubset<T[K]> : T[K]
 }
-
-// HOOK-BUILDER
-export declare const buildContext: <S extends Record<string, unknown>, C extends Partial<S>>(
-  initialState: S,
-) => {
-  ContextProvider: ContextProvider<C>
-  StateContext: Context<S | undefined>
-  DispatchContext: Context<Dispatch<Partial<S>> | undefined>
+export type DeepFlexSubset<T> = {
+  [K in keyof T]?: T[K] extends UnknownRecord ? DeepFlexSubset<T[K]> : T[K] | undefined
 }
-export declare const buildHooks: <S extends Record<string, unknown>, A extends Partial<S>>(
-  name: string,
-  StateContext: Context<S | undefined>,
-  DispatchContext: Context<Dispatch<A> | undefined>,
-) => { useContextState: () => S; useContextDispatch: () => Dispatch<A> }
-export type ContextProvider<C> = FunctionComponent<PropsWithChildren<{ config: C }>>
-
-// STORE
-export declare const localStore: <T extends Record<string, unknown>>(
-  key: string,
-  defaultVal?: T,
-) => LocalStore<T>
-export type LocalStore<T extends Record<string, unknown>> = {
-  get: () => T | null
-  set: (data: T) => void
-  delete: () => void
-}
+export type DeepSubset<T> = DeepStrictSubset<T> | DeepFlexSubset<T>
+export type Subset<T> = ShallowSubset<T> | DeepSubset<T>
+export type Range<S extends number, E extends number, A extends unknown[] = [], R extends number = never> =
+  A["length"] extends E ? R | S | E : Range<S, E, [...A, 1], A[S] extends undefined ? R : R | A["length"]>

@@ -1,12 +1,13 @@
 @import "./base.css";
 
-dialog.mc-modal {
+dialog.vf-modal {
   --color-content-bg: var(--color-bg-neutral);
   --color-overlay-bg: var(--color-neutral-600);
   --color-content-sep: var(--color-border-neutral);
   --color-dialog-title: var(--color-primary-600);
   --transition-duration-fade: 150ms;
   --transition-timing-function-fade: ease-in-out;
+  --modal-inline: var(--width-lg);
 
   display: flex;
   pointer-events: none;
@@ -29,7 +30,7 @@ dialog.mc-modal {
     }
   }
 
-  &.mc-modal-closing {
+  &.vf-modal-closing {
     opacity: 0;
     animation: fade-out var(--transition-duration-fade) var(--transition-timing-function-fade) normal;
 
@@ -39,7 +40,7 @@ dialog.mc-modal {
     }
   }
 
-  & > div.mc-modal-container {
+  & > div.vf-modal-container {
     position: fixed;
     inset: 0;
     display: flex;
@@ -50,10 +51,9 @@ dialog.mc-modal {
     padding: 0;
     overflow-y: auto;
 
-    & > section.mc-modal-content {
+    & > section.vf-modal-content {
       position: relative;
-      min-inline-size: var(--width-md);
-      max-inline-size: var(--width-lg);
+      inline-size: var(--modal-inline);
       min-block-size: fit-content;
       padding: var(--spacing-4) var(--spacing-6);
       color: var(--color-text);
@@ -109,14 +109,7 @@ dialog.mc-modal {
 }
 
 @media (width >= 40rem) {
-  dialog.mc-modal > div.mc-modal-container {
+  dialog.vf-modal > div.vf-modal-container {
     align-items: center;
-  }
-}
-
-@media (width >= 64rem) {
-  dialog.mc-modal > div.mc-modal-container > section.mc-modal-content {
-    min-inline-size: var(--width-lg);
-    max-inline-size: var(--width-xl);
   }
 }

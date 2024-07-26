@@ -13,16 +13,16 @@ export const Dropdown = forwardRef<HTMLDialogElement, DropdownProps>(
     }
 
     return (
-      <div className={cn("mc-dropdown mc-base", className)}>
+      <div className={cn("vf-dropdown vf-base", className)}>
         {renderTrigger ?
           renderTrigger(open) :
           (
-            <button type="button" onClick={open} className="mc-dropdown-trigger">
+            <button type="button" onClick={open} className="vf-dropdown-trigger">
               {triggerLabel ?? "Open Dropdown"}
             </button>
           )}
-        <dialog ref={internalRef} className={`mc-dropdown-dialog mc-dropdown-dialog-${align ?? "start"}`}>
-          <menu className="mc-dropdown-content">{children}</menu>
+        <dialog ref={internalRef} className={`vf-dropdown-dialog vf-dropdown-dialog-${align ?? "start"}`}>
+          <menu className="vf-dropdown-content">{children}</menu>
         </dialog>
       </div>
     )
@@ -36,13 +36,13 @@ export const DropdownItem = forwardRef<HTMLButtonElement, DropdownItemProps>(
         {closeDropdown ?
           (
             <form method="dialog" aria-label="Close dropdown">
-              <button ref={ref} type="submit" className={cn("mc-dropdown-item", className)} {...props}>
+              <button ref={ref} type="submit" className={cn("vf-dropdown-item", className)} {...props}>
                 {children}
               </button>
             </form>
           ) :
           (
-            <button ref={ref} type="button" className={cn("mc-dropdown-item", className)} {...props}>
+            <button ref={ref} type="button" className={cn("vf-dropdown-item", className)} {...props}>
               {children}
             </button>
           )}

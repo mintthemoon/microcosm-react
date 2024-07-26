@@ -18,7 +18,6 @@ import "./Modal.css"
 // this requires support for `allow-discrete` in transitions which lets it work with the mentioned props
 // see the wallet dropdown for an example (though simpler due to no backdrop)
 
-
 // if you're squinting at this thinking "this can't be the best way", I'm right there with you
 // the HTML5 dialog element turns out to be very difficult to animate properly without losing functionality
 // this solution animates both the dialog and its backdrop, both opening and closing
@@ -90,9 +89,9 @@ const AnimatedModal = forwardRef<HTMLDialogElement, ModalProps>(({ children, ...
 export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
   ({ children, className, title, ...props }, ref) => {
     return (
-      <AnimatedModal ref={ref} className={cn("mc-modal mc-base", className)} {...props}>
-        <div className="mc-modal-container">
-          <section className="mc-modal-content">
+      <AnimatedModal ref={ref} className={cn("vf-modal vf-base", className)} {...props}>
+        <div className="vf-modal-container">
+          <section className="vf-modal-content">
             <header>
               <h2>{title ?? "Modal Dialog"}</h2>
               <form method="dialog" aria-label="Cancel modal">

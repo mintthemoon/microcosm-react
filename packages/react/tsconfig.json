@@ -5,14 +5,12 @@
     "baseUrl": "./",
     "rootDir": "./lib",
     "outDir": "./dist",
-    "types": ["./types"],
+    "declarationDir": "./dist/types",
     "paths": {
       "$lib": ["./lib"],
       "$lib/*": ["./lib/*"],
       "$util": ["./lib/utility"],
-      "$util/*": ["./lib/utility/*"],
-      "$types": ["./types"],
-      "$types/*": ["./types"]
+      "$types": ["./types"]
     }
   },
   "include": ["lib/**/*.ts", "lib/**/*.tsx"]

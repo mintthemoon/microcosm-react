@@ -1,4 +1,4 @@
-import { Dropdown, DropdownItem, Modal, useAsync, useError, useWallet, Wallet } from "@microcosm/react"
+import { Dropdown, DropdownItem, Modal, useAsync, useError, useWallet, WalletConnect } from "@voidforge/react"
 import "./App.css"
 import { useCallback, useEffect, useRef } from "react"
 
@@ -25,7 +25,7 @@ export const App = () => {
             amount: [{ denom: "ukuji", amount: "100" }],
           },
         }
-        return await broadcast([message], "Microcosm test transaction")
+        return await broadcast([message], "Voidforge test transaction")
       } catch (err) {
         setError(err as Error)
       }
@@ -40,22 +40,22 @@ export const App = () => {
 
   return (
     <>
-      <main className="mc-base">
-        <h1 className="title">Microcosm React Framework Demo</h1>
+      <main className="vf-base">
+        <h1 className="title">Voidforge React Framework Demo</h1>
         <section className="flex flex-col space-y-4">
-          <button type="button" onClick={openModal} className="mc-button-primary">Open Modal</button>
+          <button type="button" onClick={openModal} className="vf-button-primary">Open Modal</button>
           <Dropdown
             align="end"
             renderTrigger={(open: () => void) => (
-              <button type="button" onClick={open} className="mc-button-secondary">Open Dropdown</button>
+              <button type="button" onClick={open} className="vf-button-secondary">Open Dropdown</button>
             )}
           >
             <DropdownItem>Dropdown content A</DropdownItem>
             <DropdownItem>Dropdown content B</DropdownItem>
             <DropdownItem closeDropdown>Close</DropdownItem>
           </Dropdown>
-          <Wallet featuredTokens={["KUJI", "USK", "WINK", "DEMO" ]} align="end" />
-          <button type="button" onClick={sendTestTx} className="mc-button-secondary">Test Transaction</button>
+          <WalletConnect featuredTokens={["KUJI", "USK", "WINK", "DEMO"]} align="end" />
+          <button type="button" onClick={sendTestTx} className="vf-button-secondary">Test Transaction</button>
         </section>
       </main>
       <Modal ref={modalRef}>

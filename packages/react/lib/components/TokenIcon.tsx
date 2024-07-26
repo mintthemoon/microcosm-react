@@ -1,4 +1,4 @@
-import { useChain } from "$lib/contexts"
+import { useChain } from "$lib/hooks"
 import type { TokenIconProps } from "$types"
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline"
 
@@ -8,15 +8,15 @@ export const TokenIcon = ({ symbol }: TokenIconProps) => {
 
   if (!logoUrl) {
     return (
-      <figure className="mc-token-icon">
+      <figure className="vf-token-icon">
         <QuestionMarkCircleIcon />
       </figure>
     )
   }
 
   return (
-    <figure className="mc-token-icon">
-      <img src={logoUrl} alt={symbol} className="mc-token-icon" />
+    <figure className="vf-token-icon">
+      <img src={logoUrl} alt={symbol} />
     </figure>
   )
 }

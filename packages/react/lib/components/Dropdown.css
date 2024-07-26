@@ -1,6 +1,6 @@
 @import "./base.css";
 
-.mc-dropdown {
+.vf-dropdown {
   --color-content-bg: var(--color-bg-neutral);
   --color-content-sep: var(--color-border-neutral);
 
@@ -10,7 +10,7 @@
     inline-size: 100%;
   }
 
-  & > .mc-dropdown-dialog {
+  & > .vf-dropdown-dialog {
     position: absolute;
     inset-block-start: 100%;
     z-index: 1;
@@ -20,15 +20,15 @@
     border-radius: var(--radius-lg);
     box-shadow: var(--drop-shadow-lg);
 
-    &.mc-dropdown-dialog-start {
+    &.vf-dropdown-dialog-start {
       inset-inline-start: 0;
     }
 
-    &.mc-dropdown-dialog-end {
+    &.vf-dropdown-dialog-end {
       inset-inline-start: auto;
     }
 
-    & > .mc-dropdown-content {
+    & > .vf-dropdown-content {
       & > li button {
         min-inline-size: 100%;
         border-radius: 0;

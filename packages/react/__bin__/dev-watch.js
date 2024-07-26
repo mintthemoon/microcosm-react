@@ -28,7 +28,7 @@ const build = (cb) => {
     const [s, ns] = process.hrtime(start)
     console.clear()
     console.log(`Built in ${s}.${ns.toString().padStart(9, "0").slice(0, 3)}s`)
-    cb?.()
+    cb?.([s, ns])
   })
 }
 
@@ -47,7 +47,7 @@ const subscription = await watcher.subscribe(path.join(process.cwd(), "lib"), (e
   if (isRebuilding) return
   isRebuilding = true
   console.log("Rebuilding...")
-  build(() => {
+  build(([s, ns]) => {
     setTimeout(() => {
       isRebuilding = false
     }, s > 3 ? 0 : 3 - s + (ns / 1e6))

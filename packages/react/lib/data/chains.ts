@@ -8,9 +8,9 @@ import type {
 import { assetList as mainnetAssets, chain as mainnetChain } from "@chain-registry/v2/mainnet/kujira"
 import { assetList as testnetAssets, chain as testnetChain } from "@chain-registry/v2/testnet/kujiratestnet"
 import type { ChainInfo as KujiraChainInfo } from "@keplr-wallet/types"
-import { CHAIN_INFO as kujiraChainInfo, type NETWORK as KujiraNetwork } from "kujira.js/network"
+import { CHAIN_INFO as kujiraChainInfo, type NETWORK as KujiraNetwork } from "kujira.js"
+import { merge } from "lodash"
 import moize from "moize"
-import { merge } from  "lodash"
 
 type RegistryChainData = { chain: RegistryChain; assetList: RegistryAssetList }
 
@@ -24,7 +24,6 @@ const chainDefaults = new Map<string, ChainDefaults>([
   ["kaiyo-1", { feeSymbol: "KUJI", gasAdjustment: 1.8 }],
   ["harpoon-4", { feeSymbol: "KUJI", gasAdjustment: 1.5 }],
 ])
-
 
 const newAsset = (base: string, symbol: string | undefined, exponent: number, logoUrl?: string): Asset => {
   const scaleBase = moize((amount: bigint) => {
@@ -41,10 +40,10 @@ const chainOverrides = new Map<string, Partial<ChainData>>([["harpoon-4", {
     gasPrice: 0.0034,
   }]]),
   assets: new Map<string, Asset>([[
-    "USK", newAsset("factory/kujira1r85reqy6h0lu02vyz0hnzhv5whsns55gdt4w0d7ft87utzk7u0wqr4ssll/uusk", "USK", 6, )
-  ]])
+    "USK",
+    newAsset("factory/kujira1r85reqy6h0lu02vyz0hnzhv5whsns55gdt4w0d7ft87utzk7u0wqr4ssll/uusk", "USK", 6),
+  ]]),
 }]])
-
 
 const preprocessRegistryAssets = (registryAssets: RegistryAsset[]) => {
   const assets = new Map<string, Asset>()
@@ -106,7 +105,7 @@ const preprocessChainRegistryData = (chain: RegistryChainData) => {
   const { chainId, prettyName: displayName, logoURIs, fees: registryFees } = registryInfo
   let defaults = chainDefaults.get(chainId)
   if (!defaults) {
-    console.warn(`Missing config defaults for ${chainId}`)
+    console.warn(`Missing cfg defaults for ${chainId}`)
   }
   const { assets, symbols } = preprocessRegistryAssets(registryAssets)
   const logoUrl = logoURIs?.png ?? undefined
@@ -122,7 +121,9 @@ const preprocessKujiraNetworkData = (chainInfo: KujiraChainInfo) => {
   const fees = new Map<string, FeeDenom>()
   const symbols = new Map<string, string>()
   const assets = new Map<string, Asset>()
-  for (const { coinDenom: symbol, coinMinimalDenom: base, coinDecimals: exponent, gasPriceStep } of kujiraFees) {
+  for (
+    const { coinDenom: symbol, coinMinimalDenom: base, coinDecimals: exponent, gasPriceStep } of kujiraFees
+  ) {
     const asset = newAsset(base, symbol, exponent)
     assets.set(symbol, asset)
     symbols.set(base, symbol)

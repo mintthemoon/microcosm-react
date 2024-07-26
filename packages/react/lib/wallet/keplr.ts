@@ -1,4 +1,4 @@
-import type { WalletProvider } from "$types"
+import type { Wallet } from "$types"
 import type { OfflineSigner } from "@cosmjs/proto-signing"
 import { KeplrLogo } from "./logo"
 
@@ -11,33 +11,29 @@ declare global {
   }
 }
 
-export const KeplrProvider: WalletProvider = {
+export const KeplrProvider: Wallet = {
   name: "Keplr",
   logo: KeplrLogo,
   connect: async (
     chainId: string,
-    signerCb: (signer: OfflineSigner | undefined) => void,
-    errorCb: (err: Error) => void,
-  ) => {
+    updateSigner: (data: [OfflineSigner, (() => void)?] | Error) => void,
+  ): Promise<void> => {
     console.log("KeplrProvider connect")
     if (!window.keplr) {
       throw new Error("Keplr extension is not installed")
     }
     await window.keplr.enable(chainId)
     const signer = window.keplr.getOfflineSigner(chainId)
-    signerCb(signer)
     const onAddrChange = () => {
       if (!window.keplr) {
-        errorCb(new Error("Keplr extension is not installed"))
-        signerCb(undefined)
+        updateSigner(new Error("Keplr extension is not installed"))
         return
       }
       const signer = window.keplr.getOfflineSigner(chainId)
-      signerCb(signer)
+      updateSigner([signer])
     }
     window.addEventListener("keplr_keystorechange", onAddrChange)
-    return () => {
-      window.removeEventListener("keplr_keystorechange", onAddrChange)
-    }
+    const cleanup = () => window.removeEventListener("keplr_keystorechange", onAddrChange)
+    updateSigner([signer, cleanup])
   },
 }
