@@ -1,0 +1,93 @@
+@import "./base.css";
+
+dialog.vf-modal {
+  --color-content-bg: var(--color-bg-neutral);
+  --color-overlay-bg: var(--color-neutral-600);
+  --color-content-sep: var(--color-border-neutral);
+  --color-dialog-title: var(--color-primary-600);
+  --transition-duration-fade: 150ms;
+  --transition-timing-function-fade: ease-in-out;
+  --modal-inline: var(--width-lg);
+
+  display: flex;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 150ms ease-in-out,
+    display 150ms ease-out allow-discrete,
+    overlay 150ms ease-out allow-discrete;
+
+  &::backdrop {
+    background-color: var(--color-overlay-bg);
+    filter: blur(var(--blur-lg));
+    opacity: 0;
+    transition:
+      opacity 150ms ease-in-out,
+      display 150ms ease-out allow-discrete,
+      overlay 150ms ease-out allow-discrete;
+  }
+
+  &[open] {
+    pointer-events: inherit;
+    opacity: 1;
+
+    &::backdrop {
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  & > div.vf-modal-container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100vi;
+    block-size: 100vb;
+    padding: 0;
+    overflow-y: auto;
+
+    & > section.vf-modal-content {
+      position: relative;
+      inline-size: var(--modal-inline);
+      min-block-size: fit-content;
+      padding: var(--spacing-4) var(--spacing-6);
+      color: var(--color-text);
+      background-color: var(--color-content-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--drop-shadow-xl);
+
+      & > header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--spacing-2) var(--spacing-1);
+        margin: -1em;
+        border-block-end: 1px solid var(--color-content-sep);
+
+        & > h2 {
+          display: inline-flex;
+          margin: var(--spacing-4) 0 var(--spacing-2) var(--spacing-2);
+          color: var(--color-dialog-title);
+        }
+
+        & > form {
+          display: flex;
+          margin-block-start: -1em;
+
+          & > button {
+            font-size: var(--font-size-sm);
+          }
+        }
+      }
+    }
+  }
+}

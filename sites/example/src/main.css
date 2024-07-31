@@ -1,4 +1,5 @@
-@import "@voidforge/react/base.css";
+@import "tailwindcss";
+@import "@deepcomet/forge-react/style.css";
 
 @theme {
   --color-primary-50: var(--color-rose-50);
@@ -49,7 +50,7 @@
 }
 
 dialog.vf-modal {
-  --color-overlay-bg: color-mix(in srgb, var(--color-primary-200) 97%, transparent);
+  --color-overlay-bg: color-mix(in srgb, var(--color-primary-700) 80%, transparent);
   --color-content-bg: var(--color-neutral-400);
 }
 
@@ -57,4 +58,15 @@ html, body {
   inline-size: 100%;
   min-block-size: 100vb;
   margin: 0;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  min-block-size: 100vb;
+  text-align: center;
+  background-color: var(--color-neutral-900);
 }

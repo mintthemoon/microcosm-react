@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+.vf-base {
+  --color-bg-neutral: var(--color-neutral-950);
+  --color-bg-neutral-highlight: var(--color-neutral-900);
+  --color-bg-primary: var(--color-primary-500);
+  --color-bg-primary-highlight: var(--color-primary-400);
+  --color-bg-secondary: var(--color-secondary-500);
+  --color-bg-secondary-highlight: var(--color-secondary-400);
+  --color-border-neutral: var(--color-bg-neutral);
+  --color-border-neutral-highlight: var(--color-bg-neutral-highlight);
+  --color-border-primary: var(--color-bg-primary);
+  --color-border-primary-highlight: var(--color-bg-primary-highlight);
+  --color-border-secondary: var(--color-bg-secondary);
+  --color-border-secondary-highlight: var(--color-bg-secondary-highlight);
+  --color-text-neutral: var(--color-neutral-300);
+  --color-text-neutral-highlight: var(--color-neutral-200);
+  --color-text-primary: var(--color-text);
+  --color-text-primary-highlight: var(--color-text);
+  --color-text-secondary: var(--color-light);
+  --color-text-secondary-highlight: var(--color-light);
+  --color-text: var(--color-text);
+  --color-title: var(--color-text);
+
+  & button {
+    padding: var(--spacing-2_5) var(--spacing-3_5);
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--color-text-neutral);
+    cursor: pointer;
+    background-color: var(--color-bg-neutral);
+    border: 1.5px solid var(--color-border-neutral);
+    border-radius: var(--radius-md);
+    box-shadow: var(--drop-shadow-lg);
+
+    &:hover {
+      color: var(--color-text-neutral-highlight);
+      background-color: var(--color-bg-neutral-highlight);
+      border-color: var(--color-border-neutral-highlight);
+      box-shadow: var(--drop-shadow-xl);
+    }
+
+    &:focus-visible {
+      color: var(--color-text-neutral-highlight);
+      background-color: var(--color-bg-neutral-highlight);
+      outline: 2px solid var(--color-border-secondary);
+      outline-offset: 2px;
+      box-shadow: var(--drop-shadow-xl);
+    }
+  }
+
+  & .vf-button-sm {
+    font-size: var(--font-size-sm);
+  }
+
+  & .vf-button-primary {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-primary);
+    border-color: var(--color-border-primary);
+
+    &:hover {
+      color: var(--color-text-primary-highlight);
+      background-color: var(--color-bg-primary-highlight);
+      border-color: var(--color-border-primary-highlight);
+    }
+
+    &:focus-visible {
+      color: var(--color-text-primary-highlight);
+      background-color: var(--color-bg-primary-highlight);
+    }
+  }
+
+  & .vf-button-secondary {
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-secondary);
+    border-color: var(--color-border-secondary);
+
+    &:hover {
+      color: var(--color-text-secondary-highlight);
+      background-color: var(--color-bg-secondary-highlight);
+      border-color: var(--color-border-secondary-highlight);
+    }
+
+    &:focus-visible {
+      color: var(--color-text-secondary-highlight);
+      background-color: var(--color-bg-secondary-highlight);
+    }
+  }
+
+  & :is(h3, h4, h5, h6) {
+    margin-block-start: var(--spacing-2);
+    margin-block-end: var(--spacing-3);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  & h1 {
+    margin-block-start: var(--spacing-4);
+    margin-block-end: var(--spacing-6);
+    font-size: var(--font-size-5xl);
+    font-weight: 700;
+    color: var(--color-title);
+  }
+
+  & h2 {
+    margin-block-start: var(--spacing-2);
+    margin-block-end: var(--spacing-4);
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-title);
+  }
+
+  & h3 {
+    font-size: var(--font-size-2xl);
+  }
+
+  & h4 {
+    font-size: var(--font-size-xl);
+  }
+
+  & h5 {
+    font-size: var(--font-size-lg);
+  }
+
+  & h6 {
+    font-size: var(--font-size-md);
+  }
+}
+
+@media (prefers-reduced-motion) {
+  /* TODO: make sure this actually works */
+  .vfBase * {
+    transition: none !important;
+  }
+}

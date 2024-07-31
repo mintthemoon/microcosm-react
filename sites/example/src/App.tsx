@@ -1,6 +1,6 @@
-import { Dropdown, DropdownItem, Modal, useAsync, useError, useWallet, WalletConnect } from "@voidforge/react"
-import "./App.css"
-import { useCallback, useEffect, useRef } from "react"
+import { Dropdown, DropdownItem, Modal, useError, useWallet, WalletConnect } from "@deepcomet/forge-react"
+import { useAsyncCb } from "devhooks"
+import { useEffect, useRef } from "react"
 
 export const App = () => {
   const { isReady: isWalletReady, broadcast, addr } = useWallet()
@@ -13,35 +13,33 @@ export const App = () => {
     }
   }
 
-  const { res: txRes, err: txErr, isReady: isTxReady, fn: sendTestTx } = useAsync(
-    useCallback(async () => {
-      try {
-        if (!isWalletReady || !addr) throw new Error("Wallet is not connected")
-        const message = {
-          typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-          value: {
-            fromAddress: addr,
-            toAddress: "kujira18we0s6dcn4mhefdl9t8f7u6kctgex042mt2q6l",
-            amount: [{ denom: "ukuji", amount: "100" }],
-          },
-        }
-        return await broadcast([message], "Voidforge test transaction")
-      } catch (err) {
-        setError(err as Error)
+  const [txRes, sendTx, clearTxRes] = useAsyncCb(
+    async () => {
+      if (!isWalletReady || !addr) throw new Error("Wallet is not connected")
+      const message = {
+        typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+        value: {
+          fromAddress: addr,
+          toAddress: "kujira18we0s6dcn4mhefdl9t8f7u6kctgex042mt2q6l",
+          amount: [{ denom: "ukuji", amount: "100" }],
+        },
       }
-    }, [isWalletReady, addr, broadcast, setError]),
+      return await broadcast([message], "Deepcomet Forge test transaction")
+    },
+    [isWalletReady, addr, broadcast, setError],
     setError,
   )
 
   useEffect(() => {
-    if (!isTxReady) return
-    console.log("Transaction result:", txRes ?? txErr)
-  }, [isTxReady, txRes, txErr])
+    if (txRes.loading || !(txRes.ok || txRes.err)) return
+    console.log("Transaction result:", txRes.ok ?? txRes.err)
+    clearTxRes()
+  }, [txRes, clearTxRes])
 
   return (
     <>
       <main className="vf-base">
-        <h1 className="title">Voidforge React Framework Demo</h1>
+        <h1 className="title">Deepcomet Forge React UI Demo</h1>
         <section className="flex flex-col space-y-4">
           <button type="button" onClick={openModal} className="vf-button-primary">Open Modal</button>
           <Dropdown
@@ -55,7 +53,7 @@ export const App = () => {
             <DropdownItem closeDropdown>Close</DropdownItem>
           </Dropdown>
           <WalletConnect featuredTokens={["KUJI", "USK", "WINK", "DEMO"]} align="end" />
-          <button type="button" onClick={sendTestTx} className="vf-button-secondary">Test Transaction</button>
+          <button type="button" onClick={sendTx} className="vf-button-secondary">Test Transaction</button>
         </section>
       </main>
       <Modal ref={modalRef}>

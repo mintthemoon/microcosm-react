@@ -1,0 +1,99 @@
+@import "./base.css";
+
+.vf-wallet {
+  --color-wallet-trigger-icon: var(--color-primary-400);
+  --color-wallet-disconnect-text: var(--color-red-400);
+  --color-wallet-disconnect-text-highlight: var(--color-text-neutral);
+  --color-wallet-disconnect-bg-highlight: color-mix(in srgb, var(--color-red-600) 40%, transparent);
+  --color-separator: var(--color-neutral-500);
+
+  & > .vf-wallet-trigger {
+    inline-size: 100%;
+    min-inline-size: 12em;
+
+    & .vf-wallet-trigger-icon {
+      color: var(--color-wallet-trigger-icon);
+    }
+  }
+
+  & > dialog {
+    opacity: 0;
+    transition:
+      opacity 150ms ease-in-out,
+      transform 150ms ease-out,
+      display 150ms ease-out allow-discrete,
+      overlay 150ms ease-out allow-discrete;
+    transform: scaleY(0);
+    transform-origin: top;
+
+    &[open] {
+      @starting-style {
+        opacity: 0;
+        transform: scaleY(0);
+      }
+
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  & .vf-wallet-icon {
+    display: inline-block;
+    inline-size: 1.5em;
+    margin-inline-end: var(--spacing-3);
+  }
+
+  & .vf-wallet-wallet {
+    font-size: var(--font-size-xl);
+  }
+
+  & .vf-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & .vf-wallet-disconnect {
+    color: var(--color-wallet-disconnect-text);
+    border-block-start: 1px solid var(--color-separator);
+  }
+
+  & .vf-wallet-close {
+    border-block-start: 1px solid var(--color-separator);
+  }
+
+  & .vf-wallet-disconnect:hover {
+    color: var(--color-wallet-disconnect-text-highlight);
+    background-color: var(--color-wallet-disconnect-bg-highlight);
+    border-color: transparent;
+  }
+
+  & .vf-wallet-addr {
+    font-family: var(--font-family-mono);
+    font-weight: 500;
+    cursor: default;
+    border-block-end: 1px solid var(--color-separator);
+  }
+
+  & .vf-wallet-token {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+
+    & > .vf-token-icon > img {
+      display: inline-block;
+      inline-size: 2em;
+      margin-inline-end: var(--spacing-1_5);
+      filter: grayscale(0.2);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--drop-shadow-sm);
+    }
+
+    & > .vf-wallet-token-amount {
+      margin-inline-end: var(--spacing-2);
+      font-weight: 400;
+      color: var(--color-text-neutral);
+    }
+  }
+}
